@@ -8,8 +8,8 @@ class Play extends Phaser.Scene {
     }
 
     preload(){
-        this.player = this.load.image()
-        this.load.bitmapFont('pixelKey', 'pixelText.png', 'pixelText.xml')
+       // this.player = this.load.image()
+       // this.load.bitmapFont('pixelKey', 'pixelText.png', 'pixelText.xml')
 
     }
 
