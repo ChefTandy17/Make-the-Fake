@@ -8,7 +8,7 @@ class Play extends Phaser.Scene {
     }
 
     preload(){
-
+        this.player = this.add.image()
     }
 
 //width: 1000, x
