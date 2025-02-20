@@ -8,9 +8,8 @@ class Play extends Phaser.Scene {
     }
 
     preload(){
-       // this.player = this.load.image()
-       // this.load.bitmapFont('pixelKey', 'pixelText.png', 'pixelText.xml')
-
+        this.load.image('player','./assets/img/Player.png')
+        this.load.bitmapFont('pixelKey', 'pixelText.png', 'pixelText.xml')
     }
 
 //width: 1000, x
@@ -36,8 +35,15 @@ class Play extends Phaser.Scene {
     }
        
     this.kickerScore = this.add.text(0, 430, "P1:", scoreConfig)
-    this.qbScore = this.add.text(500, 430, "P2:", scoreConfig)
-    }
+    this.qbScore = this.add.text(550, 430, "P2:", scoreConfig)
+    
+    this.kicker = this.physics.add.sprite(200,240, 'player')
+    this.kicker.setScale(6)
+
+    this.qb = this.physics.add.sprite(800,240, 'player')
+    this.qb.setScale(6)
+    this.qb.flipX = -6
+}
   
     update() {
 
