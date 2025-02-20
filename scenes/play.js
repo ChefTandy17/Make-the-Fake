@@ -22,8 +22,8 @@ class Play extends Phaser.Scene {
     this.yellowRect = this.add.rectangle(500, 0, 1000, 250, 0xf4f976)
        
     let scoreConfig = {
-        fontFamily: '',
-        fontSize: '64px',
+        fontFamily: 'Impact',
+        fontSize: '50Px',
         color: '#FFFFFF',
         align: 'right',
         padding: {
@@ -33,7 +33,8 @@ class Play extends Phaser.Scene {
         fixedWidth: 100
     }
        
-    this.kickerScore = this.add.text(0, 0, "P1:", scoreConfig)
+    this.kickerScore = this.add.text(0, 430, "P1:", scoreConfig)
+    this.qbScore = this.add.text(500, 430, "P2:", scoreConfig)
 
 
     //rect.setStrokeStyle(15, 0x000000) //to create border lines. if needed
