@@ -1,6 +1,9 @@
 //Tyvin Tandy
 //Pro Football 1861
 
+//Credits:
+//Press Start P2 font was created by CodeMan38
+
 
 let config = {
     type: Phaser.AUTO,

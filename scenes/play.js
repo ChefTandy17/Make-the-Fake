@@ -8,7 +8,9 @@ class Play extends Phaser.Scene {
     }
 
     preload(){
-        this.player = this.add.image()
+        this.player = this.load.image()
+        this.load.bitmapFont('pixelKey', 'pixelText.png', 'pixelText.xml')
+
     }
 
 //width: 1000, x
@@ -35,9 +37,6 @@ class Play extends Phaser.Scene {
        
     this.kickerScore = this.add.text(0, 430, "P1:", scoreConfig)
     this.qbScore = this.add.text(500, 430, "P2:", scoreConfig)
-
-
-    //rect.setStrokeStyle(15, 0x000000) //to create border lines. if needed
     }
   
     update() {
