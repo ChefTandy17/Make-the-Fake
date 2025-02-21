@@ -8,9 +8,20 @@ class Play extends Phaser.Scene {
     }
 
     preload(){
+        
         this.load.image('player','./assets/img/Player.png')
-        this.load.image('football','./assets/img/Football.png')
+        this.load.image('football','./assets/img/football.png')
+
         this.load.bitmapFont('pixelKey', 'pixelText.png', 'pixelText.xml')
+
+        this.load.spritesheet('kicker','./assets/img/kicker.png',{
+            frameWidth: 44,
+            frameHeight: 54,
+        })
+        this.load.spritesheet('qb','./assets/img/qb.png',{
+            frameWidth: 44,
+            frameHeight: 54,
+        })
     }
 
 //width: 1000, x
@@ -22,6 +33,9 @@ class Play extends Phaser.Scene {
     this.scoringRect = this.add.rectangle(500, 480, 1000, 100, 0x000000) // x, y, width, height, color
     this.purpleRect = this.add.rectangle(500, 330, 1000, 100, 0xdf57f6)
     this.yellowRect = this.add.rectangle(500, 0, 1000, 250, 0xf4f976)
+
+    //to create an invisible barrier in the middle
+    let invisibleBarrierMiddle = this.physics.add.sprite(500, 1).setOrigin(0).setSize(1, 1000).setVisible(false)
        
     let scoreConfig = {
         fontFamily: 'Impact',
@@ -37,17 +51,90 @@ class Play extends Phaser.Scene {
        
     this.kickerScore = this.add.text(0, 430, "P1:", scoreConfig)
     this.qbScore = this.add.text(550, 430, "P2:", scoreConfig)
-    
+
+    //saved to make the game look more polish or maybe more fun
+    //this.cursors = this.input.keyboard.createCursorKeys()    //an object that stores in cursors for the four arrow keys
+
+    //for the kicker to kick the ball
+    this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
+
+    this.kicker = this.physics.add.sprite(200,240, 'kicker')
+    this.kicker.setScale(6)
+    this.kicker.setDepth(1)
+
+    this.qb = this.physics.add.sprite(800,240, 'qb')
+    this.qb.setScale(6)
+    this.qb.flipX = -6
+
+    this.football = this.physics.add.sprite(770,150,'football')
+    this.football.setScale(6)
+
+//placeholder 
+/*
     this.kicker = this.physics.add.sprite(200,240, 'player')
     this.kicker.setScale(6)
 
     this.qb = this.physics.add.sprite(800,240, 'player')
     this.qb.setScale(6)
     this.qb.flipX = -6
+*/
+
+        //create a kick animations for the kicker
+        this.anims.create({
+            key: 'kickerIdle',
+            frames: this.anims.generateFrameNumbers('kicker', { 
+                start: 0, 
+                end: 0 
+            }),
+            frameRate: 1,
+            repeat: 0
+        })
+
+        //create a kick animations for the kicker
+        this.anims.create({
+            key: 'kick',
+            frames: this.anims.generateFrameNumbers('kicker', { 
+                start: 1, 
+                end: 1 
+            }),
+            frameRate: 1,
+            repeat: 0
+        })
+
+        //create a throwing animations for the quarterback    
+        this.anims.create({
+            key: 'qbIdle',
+            frames: this.anims.generateFrameNumbers('qb', { 
+                start: 0, 
+                end: 0 
+            }),
+            frameRate: 1,
+            repeat: 0
+        })
+
+        //create a throwing animations for the quarterback    
+        this.anims.create({
+            key: 'throw',
+            frames: this.anims.generateFrameNumbers('qb', { 
+                start: 1, 
+                end: 1 
+            }),
+            frameRate: 1,
+            repeat: 0
+        })
 }
   
-    update() {
-
+update() {
+    if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
+        this.kicker.play('kick');
+        this.time.addEvent({
+            delay: 3000,
+            callback: () => {
+                this.kicker.play('kickerIdle');
+            },
+            callbackScope: this
+        });
     }
+}
 
 }
