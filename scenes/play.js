@@ -9,6 +9,7 @@ class Play extends Phaser.Scene {
 
     preload(){
         this.load.image('player','./assets/img/Player.png')
+        this.load.image('football','./assets/img/Football.png')
         this.load.bitmapFont('pixelKey', 'pixelText.png', 'pixelText.xml')
     }
 
