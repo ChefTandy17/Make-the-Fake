@@ -49,8 +49,11 @@ class Play extends Phaser.Scene {
         fixedWidth: 100
     }
        
-    this.kickerScore = this.add.text(0, 430, "P1:", scoreConfig)
-    this.qbScore = this.add.text(550, 430, "P2:", scoreConfig)
+    this.kickerScoreText = this.add.text(0, 430, "P1:", scoreConfig)
+    this.kickerScore = this.add.text(100, 430, "000", scoreConfig)
+
+    this.qbScoreText = this.add.text(550, 430, "P2:", scoreConfig)
+    this.qbScore = this.add.text(650, 430, "000", scoreConfig)
 
     //saved to make the game look more polish or maybe more fun
     //this.cursors = this.input.keyboard.createCursorKeys()    //an object that stores in cursors for the four arrow keys
@@ -77,7 +80,6 @@ class Play extends Phaser.Scene {
 
     this.football = this.physics.add.sprite(770,150,'football')
     this.football.setScale(6)
-    this.football.body.setCollideWorldBounds(false)
 
     this.physics.add.collider(this.kicker, this.football, (kicker, football) => {
         football.setVelocityY(-1000)
@@ -130,10 +132,7 @@ class Play extends Phaser.Scene {
   
 update() {
 
-    //CPU throwing the football to the player
-        this.qb.play('throw')
         this.football.setVelocityX(-300)
-
 
         if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
             this.kicker.play('kick')
@@ -152,13 +151,5 @@ update() {
             })
         }
 
-        if (this.football.x < 0 || this.football.x > this.sys.game.config.width ||
-            this.football.y < 0 || this.football.y > this.sys.game.config.height) {
-                this.football.destroy()
-                this.football = this.physics.add.sprite(770, 150, 'football')
-                this.football.setScale(6)
-                this.football.body.setCollideWorldBounds(false)
-        }
-    //}
 }
 }
