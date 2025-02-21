@@ -61,9 +61,14 @@ class Play extends Phaser.Scene {
     this.kicker = this.physics.add.sprite(200,240, 'kicker')
     this.kicker.setScale(6)
     this.kicker.setDepth(1)
+    this.kicker.body.setSize(5, 5)
+    this.kicker.setOffset(10,50)
+
 
     this.qb = this.physics.add.sprite(800,240, 'qb')
     this.qb.setScale(6)
+    this.qb.body.setSize(5, 5)
+    this.qb.setOffset(21,50)
     this.qb.flipX = -6
 
     this.football = this.physics.add.sprite(770,150,'football')
@@ -126,14 +131,18 @@ class Play extends Phaser.Scene {
   
 update() {
     if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
-        this.kicker.play('kick');
+        this.kicker.play('kick')
+        this.kicker.setSize(5, 5)
+        this.kicker.setOffset(25, 15)
         this.time.addEvent({
             delay: 3000,
             callback: () => {
-                this.kicker.play('kickerIdle');
+                this.kicker.play('kickerIdle')
+                this.kicker.body.setSize(5, 5)
+                this.kicker.setOffset(10,50)
             },
             callbackScope: this
-        });
+        })
     }
 }
 
