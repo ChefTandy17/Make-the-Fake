@@ -36,7 +36,7 @@ class Play extends Phaser.Scene {
 
     //to create an invisible barrier in the middle
     let invisibleBarrierMiddle = this.physics.add.sprite(500, 1).setOrigin(0).setSize(1, 1000).setVisible(false)
-       
+
     let scoreConfig = {
         fontFamily: 'Impact',
         fontSize: '50Px',
@@ -63,6 +63,8 @@ class Play extends Phaser.Scene {
     this.kicker.setDepth(1)
     this.kicker.body.setSize(5, 5)
     this.kicker.setOffset(10,50)
+    this.kicker.body.setCollideWorldBounds(true)
+    this.kicker.body.setImmovable(true) 
 
 
     this.qb = this.physics.add.sprite(800,240, 'qb')
@@ -70,20 +72,17 @@ class Play extends Phaser.Scene {
     this.qb.body.setSize(5, 5)
     this.qb.setOffset(21,50)
     this.qb.flipX = -6
+    this.qb.body.setCollideWorldBounds(true)
+    this.qb.body.setImmovable(true) 
 
     this.football = this.physics.add.sprite(770,150,'football')
     this.football.setScale(6)
+    this.football.body.setCollideWorldBounds(false)
 
-//placeholder 
-/*
-    this.kicker = this.physics.add.sprite(200,240, 'player')
-    this.kicker.setScale(6)
-
-    this.qb = this.physics.add.sprite(800,240, 'player')
-    this.qb.setScale(6)
-    this.qb.flipX = -6
-*/
-
+    this.physics.add.collider(this.kicker, this.football, (kicker, football) => {
+        football.setVelocityY(-1000)
+    })
+    
         //create a kick animations for the kicker
         this.anims.create({
             key: 'kickerIdle',
@@ -130,20 +129,36 @@ class Play extends Phaser.Scene {
 }
   
 update() {
-    if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
-        this.kicker.play('kick')
-        this.kicker.setSize(5, 5)
-        this.kicker.setOffset(25, 15)
-        this.time.addEvent({
-            delay: 3000,
-            callback: () => {
-                this.kicker.play('kickerIdle')
-                this.kicker.body.setSize(5, 5)
-                this.kicker.setOffset(10,50)
-            },
-            callbackScope: this
-        })
-    }
-}
 
+    //CPU throwing the football to the player
+        this.qb.play('throw')
+        this.football.setVelocityX(-300)
+
+
+        if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
+            this.kicker.play('kick')
+            this.kicker.setSize(5, 10)
+            this.kicker.setOffset(25, 10)
+
+
+            this.time.addEvent({
+                delay: 1000,
+                callback: () => {
+                    this.kicker.play('kickerIdle')
+                    this.kicker.body.setSize(5, 5)
+                    this.kicker.setOffset(10,50)
+                    },
+                callbackScope: this
+            })
+        }
+
+        if (this.football.x < 0 || this.football.x > this.sys.game.config.width ||
+            this.football.y < 0 || this.football.y > this.sys.game.config.height) {
+                this.football.destroy()
+                this.football = this.physics.add.sprite(770, 150, 'football')
+                this.football.setScale(6)
+                this.football.body.setCollideWorldBounds(false)
+        }
+    //}
+}
 }
