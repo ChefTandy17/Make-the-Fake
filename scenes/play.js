@@ -45,15 +45,15 @@ class Play extends Phaser.Scene {
         padding: {
             top: 5,
             bottom: 5,
-        },
-        fixedWidth: 100
+        }
     }
-       
-    this.kickerScoreText = this.add.text(0, 430, "P1:", scoreConfig)
-    this.kickerScore = this.add.text(100, 430, "000", scoreConfig)
-
-    this.qbScoreText = this.add.text(550, 430, "P2:", scoreConfig)
-    this.qbScore = this.add.text(650, 430, "000", scoreConfig)
+    
+    this.kickerScore = 0
+    this.qbScore = 0
+    
+    this.kickerScoreText = this.add.text(50, 430, "P1: ", scoreConfig)
+    this.qbScoreText = this.add.text(550, 430, "P2: ", scoreConfig)
+    
 
     //saved to make the game look more polish or maybe more fun
     //this.cursors = this.input.keyboard.createCursorKeys()    //an object that stores in cursors for the four arrow keys
@@ -82,7 +82,9 @@ class Play extends Phaser.Scene {
     this.football.setScale(6)
 
     this.physics.add.collider(this.kicker, this.football, (kicker, football) => {
-        football.setVelocityY(-1000)
+        football.setVelocity(0,-1000)
+        this.kickerScore += 100
+        this.kickerScoreText.setText("P1: " + this.kickerScore)
     })
     
         //create a kick animations for the kicker
@@ -136,9 +138,8 @@ update() {
 
         if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
             this.kicker.play('kick')
-            this.kicker.setSize(5, 10)
-            this.kicker.setOffset(25, 10)
-
+            this.kicker.setSize(5, 5)
+            this.kicker.setOffset(25, 14)
 
             this.time.addEvent({
                 delay: 1000,
