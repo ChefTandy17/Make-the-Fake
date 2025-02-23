@@ -170,6 +170,29 @@ resetFootball(player) {
     })
 }
 
+//display victory screen for the kicker or the qb
+victoryScreen(score, player){
+    if(player == "kicker" && score >= 100){
+        this.add.text(game.config.width / 2, game.config.width, "KICKER VICTORY")
+    }
+    else if(player = 'qb' && score >= 100){
+        this.add.text(game.config.width / 2, game.config.width, "QUARTERBACK VICTORY")
+    }
+    else{
+        console.log("error")
+    }
+    //NOTE: if main menu scene exist, sent it to main menu scene
+    //to restart the game back to zero.
+/*    this.time.addEvent({
+        delay: 7000,
+        callback: () => {
+            this.scene.restart()
+        },
+        callbackScope: this
+    })
+*/
+}
+
 update() {
 
         //used for testing
@@ -197,12 +220,14 @@ update() {
             this.football.setVelocity(0,-300)
         })
 
+        //the kicker gets 100 points everytime the football is out of bounds
         if (this.football.y < 0 || this.football.y > this.sys.game.config.height) {
             this.resetFootball("kicker")
             this.qb.play('qbIdle')
+            this.victoryScreen(this.kickerScore, "kicker")
         }
 
-/*      //when the kicker kicks the ball, it goes way over 100 points depening on the hitbox    
+/*      //BUG: when the kicker kicks the ball, it goes way over 100 points depening on the hitbox    
         //the kicker gets 100 points if they successfully kick the footbal
         this.physics.add.collider(this.kicker, this.football, (kicker, football) => {
             this.football.setVelocity(0,-300)
@@ -216,6 +241,7 @@ update() {
         if (this.football.x < 0 || this.football.x > this.sys.game.config.width) {
             this.resetFootball("qb")
             this.qb.play('qbIdle')
+            this.victoryScreen(this.qbScore, "qb")
         }
 }
 }
