@@ -170,7 +170,6 @@ resetFootball(player) {
     })
 }
 
-
 update() {
 
         //used for testing
