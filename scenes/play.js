@@ -125,29 +125,56 @@ class Play extends Phaser.Scene {
             repeat: 0
         })
 
-        //testing to see if it throws
-        this.qbCPU()
+        //to set up the first throw of the game (probably theres a better way, buts thats all I can come up with)
+        this.firstQBThrow()
 }
   
-
-qbCPU(){
-        //for the CPU to perform random throws of the football
+//for the CPU to perform a throw. this is called only once to set up the game
+firstQBThrow(){
         this.time.addEvent({
-            delay: 300,
+            delay: Phaser.Math.Between(1000, 5000),
             callback: () => {
                 this.qb.play('throw')
                 this.football.setVelocity(-300,0)
                 },
             callbackScope: this,
-            loop: true,
+            loop: false,               //to perform this only once
         })
 }
+
+//when the football is out of bounds, figure out who to give the score to, reset velocity and position, and delay the next throw.
+resetFootball(player) {
+    this.football.setPosition(770, 150)
+    this.football.setVelocity(0, 0)
+
+    if (player == 'kicker') {
+        this.kickerScore += 100
+        this.kickerScoreText.setText("P1: " + this.kickerScore)
+    } 
+    else if (player == 'qb') {
+        this.qbScore += 100
+        this.qbScoreText.setText("P2: " + this.qbScore)
+    }
+    else{
+        console.log("hello there :)")
+    }
+
+    //similar function as the firstQBThrow
+    this.time.addEvent({
+        delay: Phaser.Math.Between(2000, 4000),
+        callback: () => {
+            this.qb.play('throw')
+            this.football.setVelocity(-300, 0)
+        },
+        callbackScope: this
+    })
+}
+
 
 update() {
 
         //used for testing
         //this.football.body.setVelocityX(-300)
-
 
         //if the kicker kicks the ball
         if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
@@ -156,7 +183,7 @@ update() {
             this.kicker.setOffset(25, 14)
 
             this.time.addEvent({
-                delay: 1000,
+                delay: 300,
                 callback: () => {
                     this.kicker.play('kickerIdle')
                     this.kicker.body.setSize(5, 5)
@@ -172,10 +199,8 @@ update() {
         })
 
         if (this.football.y < 0 || this.football.y > this.sys.game.config.height) {
-            this.football.setPosition(770,150)
-            this.football.setVelocity(-300,0)
-            this.kickerScore += 100
-            this.kickerScoreText.setText("P1: " + this.kickerScore)
+            this.resetFootball("kicker")
+            this.qb.play('qbIdle')
         }
 
 /*      //when the kicker kicks the ball, it goes way over 100 points depening on the hitbox    
@@ -190,9 +215,8 @@ update() {
 
         //the qb gets 100 points everytime the football is out of bounds
         if (this.football.x < 0 || this.football.x > this.sys.game.config.width) {
-            this.football.setPosition(770,150)
-            this.qbScore += 100
-            this.qbScoreText.setText("P2: " + this.qbScore)
+            this.resetFootball("qb")
+            this.qb.play('qbIdle')
         }
 }
 }
