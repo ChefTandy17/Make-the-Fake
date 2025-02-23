@@ -61,8 +61,8 @@ class Play extends Phaser.Scene {
     this.kickerScore = 0
     this.qbScore = 0
 
-    this.kickerScoreText = this.add.bitmapText(50, 450, 'pixelKey', 'P1: 0', 40).setTintFill(0xffffff)
-    this.qbScoreText = this.add.bitmapText(550, 450, 'pixelKey', 'P2: 0', 40).setTintFill(0xffffff)
+    this.kickerScoreText = this.add.bitmapText(50, 450, 'pixelKey', 'P1:000', 40).setTintFill(0xffffff)
+    this.qbScoreText = this.add.bitmapText(550, 450, 'pixelKey', 'P2:000', 40).setTintFill(0xffffff)
 
 /*
     this.kickerScoreText = this.add.text(50, 430, "P1: ", scoreConfig)
@@ -166,11 +166,11 @@ resetFootball(player) {
 
     if (player == 'kicker') {
         this.kickerScore += 100
-        this.kickerScoreText.setText("P1: " + this.kickerScore)
+        this.kickerScoreText.setText("P1:" + this.kickerScore)
     } 
     else if (player == 'qb') {
         this.qbScore += 100
-        this.qbScoreText.setText("P2: " + this.qbScore)
+        this.qbScoreText.setText("P2:" + this.qbScore)
     }
 
     this.victoryScreen(this.kickerScore, this.qbScore, player)
