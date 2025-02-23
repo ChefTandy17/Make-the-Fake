@@ -161,6 +161,7 @@ firstQBThrow(){
 
 //when the football is out of bounds, figure out who to give the score to, reset velocity and position, and delay the next throw.
 resetFootball(player, pixelTextFont) {
+    this.football.body.updateFromGameObject()
     this.football.setPosition(770, 150)
     this.football.setVelocity(0, 0)
 
