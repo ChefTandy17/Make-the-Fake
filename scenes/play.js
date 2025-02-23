@@ -14,6 +14,8 @@ class Play extends Phaser.Scene {
         this.load.image('player','img/Player.png')
         this.load.image('football','img/football.png')
 
+        this.load.audio('kickSound','sfx/kickSound.mp3')
+
         //to load the bitmap font for the Press Start P2 text
         this.load.bitmapFont('pixelKey', 'fonts/pixelText.png', 'fonts/pixelText.xml')
 
@@ -223,9 +225,6 @@ this.qbScoreText = this.add.bitmapText(550, 450, 'pixelKey', 'P2:000', 40).setTi
         console.log("in qb")
         this.gameOver = true
     }
-    else{
-        console.log("error")
-    }
     //NOTE: if main menu scene exist, sent it to main menu scene
     if(this.gameOver){
         //to restart the play scene
@@ -265,6 +264,7 @@ update() {
 
 
         this.physics.add.collider(this.kicker, this.football, (kicker, football) => {
+            this.sound.play('kickSound')
             this.football.setVelocity(0,-300)
         })
 
