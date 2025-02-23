@@ -158,9 +158,6 @@ resetFootball(player) {
         this.qbScore += 100
         this.qbScoreText.setText("P2: " + this.qbScore)
     }
-    else{
-        console.log("hello there :)")
-    }
 
     this.victoryScreen(this.kickerScore, this.qbScore, player)
 
