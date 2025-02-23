@@ -8,19 +8,20 @@ class Play extends Phaser.Scene {
     }
 
     preload(){
+
+        this.load.path = './assets/'
         
-        this.load.image('player','./assets/img/Player.png')
-        this.load.image('football','./assets/img/football.png')
+        this.load.image('player','img/Player.png')
+        this.load.image('football','img/football.png')
 
         //to load the bitmap font for the Press Start P2 text
-        this.load.path = './assets/'
         this.load.bitmapFont('pixelKey', 'fonts/pixelText.png', 'fonts/pixelText.xml')
 
-        this.load.spritesheet('kicker','./assets/img/kicker.png',{
+        this.load.spritesheet('kicker','/img/kicker.png',{
             frameWidth: 44,
             frameHeight: 54,
         })
-        this.load.spritesheet('qb','./assets/img/qb.png',{
+        this.load.spritesheet('qb','img/qb.png',{
             frameWidth: 44,
             frameHeight: 54,
         })
@@ -39,9 +40,12 @@ class Play extends Phaser.Scene {
     //to create an invisible barrier in the middle
     let invisibleBarrierMiddle = this.physics.add.sprite(500, 1).setOrigin(0).setSize(1, 1000).setVisible(false)
 
+/*  used for testing
     this.add.bitmapText(centerX, centerY, 'pixelKey', 'Hello').setOrigin(0.5)
     this.add.bitmapText(centerX, centerY, 'pixelKey', 'World', 36, 1).setOrigin(0.5)
+*/
 
+/*
     let scoreConfig = {
         fontFamily: 'Impact',
         fontSize: '50Px',
@@ -52,13 +56,18 @@ class Play extends Phaser.Scene {
             bottom: 5,
         }
     }
-    
+*/
+
     this.kickerScore = 0
     this.qbScore = 0
-    
+
+    this.kickerScoreText = this.add.bitmapText(50, 450, 'pixelKey', 'P1: 0', 40).setTintFill(0xffffff)
+    this.qbScoreText = this.add.bitmapText(550, 450, 'pixelKey', 'P2: 0', 40).setTintFill(0xffffff)
+
+/*
     this.kickerScoreText = this.add.text(50, 430, "P1: ", scoreConfig)
     this.qbScoreText = this.add.text(550, 430, "P2: ", scoreConfig)
-    
+*/  
 
     //saved to make the game look more polish or maybe more fun
     //this.cursors = this.input.keyboard.createCursorKeys()    //an object that stores in cursors for the four arrow keys
