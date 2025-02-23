@@ -160,7 +160,7 @@ firstQBThrow(){
 }
 
 //when the football is out of bounds, figure out who to give the score to, reset velocity and position, and delay the next throw.
-resetFootball(player) {
+resetFootball(player, pixelTextFont) {
     this.football.setPosition(770, 150)
     this.football.setVelocity(0, 0)
 
@@ -173,7 +173,7 @@ resetFootball(player) {
         this.qbScoreText.setText("P2:" + this.qbScore)
     }
 
-    this.victoryScreen(this.kickerScore, this.qbScore, player)
+    this.victoryScreen(this.kickerScore, this.qbScore, player, pixelTextFont)
 
     if(!this.gameOver){
         //similar function as the firstQBThrow
@@ -189,8 +189,9 @@ resetFootball(player) {
 }
 
 //display victory screen for the kicker or the qb
-victoryScreen(checkKickerScore, checkQBScore, player){
+victoryScreen(checkKickerScore, checkQBScore, player, pixelTextFont){
 
+/*
     let scoreConfig = {
         fontFamily: 'Impact',
         fontSize: '50Px',
@@ -202,13 +203,22 @@ victoryScreen(checkKickerScore, checkQBScore, player){
         }
     }
 
-    if(player == "kicker" && checkKickerScore >= 100){
-        this.add.text(game.config.width / 2, game.config.height / 2, "KICKER VICTORY", scoreConfig).setOrigin(0.5)
+this.kickerScoreText = this.add.bitmapText(50, 450, 'pixelKey', 'P1:000', 40).setTintFill(0xffffff)
+this.qbScoreText = this.add.bitmapText(550, 450, 'pixelKey', 'P2:000', 40).setTintFill(0xffffff)
+
+*/
+
+    if(player == "kicker" && checkKickerScore >= 1000){
+        //this.add.bitmaptext(centerX / 2, centerY / 2, "KICKER VICTORY", pixelTextFont).setOrigin(0.5)
+        let kickerVictory = this.add.bitmapText(centerX, centerY, pixelTextFont, "KICKER VICTORY", 40).setTintFill(0xffffff).setOrigin(0.5)
+        kickerVictory.setDepth(1)
         console.log("in kicker")
         this.gameOver = true
     }
-    else if(player = 'qb' && checkQBScore >= 100){
-        this.add.text(game.config.width / 2, game.config.height / 2, "QUARTERBACK VICTORY", scoreConfig).setOrigin(0.5)
+    else if(player = 'qb' && checkQBScore >= 1000){
+        //this.add.bitmaptext(centerX / 2, centerY / 2, "QUARTERBACK VICTORY", pixelTextFont).setOrigin(0.5)
+        let qbVictory = this.add.bitmapText(centerX, centerY, pixelTextFont, "QUARTERBACK VICTORY", 35).setTintFill(0xffffff).setOrigin(0.5)
+        qbVictory.setDepth(1)
         console.log("in qb")
         this.gameOver = true
     }
@@ -216,15 +226,16 @@ victoryScreen(checkKickerScore, checkQBScore, player){
         console.log("error")
     }
     //NOTE: if main menu scene exist, sent it to main menu scene
-
-    //to restart the play scene
-    this.time.addEvent({
-        delay: 7000,
-        callback: () => {
-            this.scene.restart()
-        },
-        callbackScope: this
-    })
+    if(this.gameOver){
+        //to restart the play scene
+        this.time.addEvent({
+            delay: 7000,
+            callback: () => {
+                this.scene.restart()
+            },
+            callbackScope: this
+        })
+    }
 
 }
 
@@ -258,7 +269,7 @@ update() {
 
         //the kicker gets 100 points everytime the football is out of bounds
         if (this.football.y < 0 || this.football.y > this.sys.game.config.height) {
-            this.resetFootball("kicker")
+            this.resetFootball("kicker", 'pixelKey')
             this.qb.play('qbIdle')
         }
 
@@ -274,7 +285,7 @@ update() {
 
         //the qb gets 100 points everytime the football is out of bounds
         if (this.football.x < 0 || this.football.x > this.sys.game.config.width) {
-            this.resetFootball("qb")
+            this.resetFootball("qb",'pixelKey')
             this.qb.play('qbIdle')
         }
     }
