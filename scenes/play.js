@@ -12,7 +12,9 @@ class Play extends Phaser.Scene {
         this.load.image('player','./assets/img/Player.png')
         this.load.image('football','./assets/img/football.png')
 
-        this.load.bitmapFont('pixelKey', 'pixelText.png', 'pixelText.xml')
+        //to load the bitmap font for the Press Start P2 text
+        this.load.path = './assets/'
+        this.load.bitmapFont('pixelKey', 'fonts/pixelText.png', 'fonts/pixelText.xml')
 
         this.load.spritesheet('kicker','./assets/img/kicker.png',{
             frameWidth: 44,
@@ -36,6 +38,9 @@ class Play extends Phaser.Scene {
 
     //to create an invisible barrier in the middle
     let invisibleBarrierMiddle = this.physics.add.sprite(500, 1).setOrigin(0).setSize(1, 1000).setVisible(false)
+
+    this.add.bitmapText(centerX, centerY, 'pixelKey', 'Hello').setOrigin(0.5)
+    this.add.bitmapText(centerX, centerY, 'pixelKey', 'World', 36, 1).setOrigin(0.5)
 
     let scoreConfig = {
         fontFamily: 'Impact',

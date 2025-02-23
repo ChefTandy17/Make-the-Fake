@@ -4,6 +4,8 @@
 //Credits:
 //Press Start P2 font was created by CodeMan38
 
+// you need this 
+'use strict'
 
 let config = {
     type: Phaser.AUTO,
@@ -23,8 +25,12 @@ let config = {
         },
     },
     scene: [ Play ]
-};
+}
 
 //set up the game
 let game = new Phaser.Game(config);
 
+//taken from lecture to test bitmaptext and debugging, or maybe to use it
+let { width, height } = game.config
+let centerX = width / 2
+let centerY = height / 2
