@@ -164,15 +164,17 @@ resetFootball(player) {
 
     this.victoryScreen(this.kickerScore, this.qbScore, player)
 
-    //similar function as the firstQBThrow
-    this.time.addEvent({
-        delay: Phaser.Math.Between(2000, 4000),
-        callback: () => {
-            this.qb.play('throw')
-            this.football.setVelocity(-300, 0)
-        },
-        callbackScope: this
-    })
+    if(!this.gameOver){
+        //similar function as the firstQBThrow
+        this.time.addEvent({
+            delay: Phaser.Math.Between(2000, 4000),
+            callback: () => {
+                this.qb.play('throw')
+                this.football.setVelocity(-300, 0)
+            },
+            callbackScope: this
+        })
+    }
 }
 
 //display victory screen for the kicker or the qb
@@ -192,12 +194,12 @@ victoryScreen(checkKickerScore, checkQBScore, player){
     if(player == "kicker" && checkKickerScore >= 100){
         this.add.text(game.config.width / 2, game.config.height / 2, "KICKER VICTORY", scoreConfig).setOrigin(0.5)
         console.log("in kicker")
-        this.gameOver == true
+        this.gameOver = true
     }
     else if(player = 'qb' && checkQBScore >= 100){
         this.add.text(game.config.width / 2, game.config.height / 2, "QUARTERBACK VICTORY", scoreConfig).setOrigin(0.5)
         console.log("in qb")
-        this.gameOver == true
+        this.gameOver = true
     }
     else{
         console.log("error")
