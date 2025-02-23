@@ -205,15 +205,16 @@ victoryScreen(checkKickerScore, checkQBScore, player){
         console.log("error")
     }
     //NOTE: if main menu scene exist, sent it to main menu scene
-    //to restart the game back to zero.
-/*    this.time.addEvent({
+
+    //to restart the play scene
+    this.time.addEvent({
         delay: 7000,
         callback: () => {
             this.scene.restart()
         },
         callbackScope: this
     })
-*/
+
 }
 
 update() {
