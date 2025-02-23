@@ -80,12 +80,6 @@ class Play extends Phaser.Scene {
 
     this.football = this.physics.add.sprite(770,150,'football')
     this.football.setScale(6)
-
-    this.physics.add.collider(this.kicker, this.football, (kicker, football) => {
-        football.setVelocity(0,-1000)
-        this.kickerScore += 100
-        this.kickerScoreText.setText("P1: " + this.kickerScore)
-    })
     
         //create a kick animations for the kicker
         this.anims.create({
@@ -130,12 +124,32 @@ class Play extends Phaser.Scene {
             frameRate: 1,
             repeat: 0
         })
+
+        //testing to see if it throws
+        this.qbCPU()
 }
   
+
+qbCPU(){
+        //for the CPU to perform random throws of the football
+        this.time.addEvent({
+            delay: 300,
+            callback: () => {
+                this.qb.play('throw')
+                this.football.setVelocity(-300,0)
+                },
+            callbackScope: this,
+            loop: true,
+        })
+}
+
 update() {
 
-        this.football.setVelocityX(-300)
+        //used for testing
+        //this.football.body.setVelocityX(-300)
 
+
+        //if the kicker kicks the ball
         if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
             this.kicker.play('kick')
             this.kicker.setSize(5, 5)
@@ -152,5 +166,33 @@ update() {
             })
         }
 
+
+        this.physics.add.collider(this.kicker, this.football, (kicker, football) => {
+            this.football.setVelocity(0,-300)
+        })
+
+        if (this.football.y < 0 || this.football.y > this.sys.game.config.height) {
+            this.football.setPosition(770,150)
+            this.football.setVelocity(-300,0)
+            this.kickerScore += 100
+            this.kickerScoreText.setText("P1: " + this.kickerScore)
+        }
+
+/*      //when the kicker kicks the ball, it goes way over 100 points depening on the hitbox    
+        //the kicker gets 100 points if they successfully kick the footbal
+        this.physics.add.collider(this.kicker, this.football, (kicker, football) => {
+            this.football.setVelocity(0,-300)
+            this.kickerScore += 100
+            this.kickerScoreText.setText("P1: " + this.kickerScore)
+            this.qbThrow
+        })
+*/
+
+        //the qb gets 100 points everytime the football is out of bounds
+        if (this.football.x < 0 || this.football.x > this.sys.game.config.width) {
+            this.football.setPosition(770,150)
+            this.qbScore += 100
+            this.qbScoreText.setText("P2: " + this.qbScore)
+        }
 }
 }
