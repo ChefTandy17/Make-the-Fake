@@ -80,6 +80,9 @@ class Play extends Phaser.Scene {
 
     this.football = this.physics.add.sprite(770,150,'football')
     this.football.setScale(6)
+
+    //game over flag
+    this.gameOver = false
     
         //create a kick animations for the kicker
         this.anims.create({
@@ -159,6 +162,8 @@ resetFootball(player) {
         console.log("hello there :)")
     }
 
+    this.victoryScreen(this.kickerScore, this.qbScore, player)
+
     //similar function as the firstQBThrow
     this.time.addEvent({
         delay: Phaser.Math.Between(2000, 4000),
@@ -171,12 +176,28 @@ resetFootball(player) {
 }
 
 //display victory screen for the kicker or the qb
-victoryScreen(score, player){
-    if(player == "kicker" && score >= 100){
-        this.add.text(game.config.width / 2, game.config.width, "KICKER VICTORY")
+victoryScreen(checkKickerScore, checkQBScore, player){
+
+    let scoreConfig = {
+        fontFamily: 'Impact',
+        fontSize: '50Px',
+        color: '#FFFFFF',
+        align: 'right',
+        padding: {
+            top: 5,
+            bottom: 5,
+        }
     }
-    else if(player = 'qb' && score >= 100){
-        this.add.text(game.config.width / 2, game.config.width, "QUARTERBACK VICTORY")
+
+    if(player == "kicker" && checkKickerScore >= 100){
+        this.add.text(game.config.width / 2, game.config.height / 2, "KICKER VICTORY", scoreConfig).setOrigin(0.5)
+        console.log("in kicker")
+        this.gameOver == true
+    }
+    else if(player = 'qb' && checkQBScore >= 100){
+        this.add.text(game.config.width / 2, game.config.height / 2, "QUARTERBACK VICTORY", scoreConfig).setOrigin(0.5)
+        console.log("in qb")
+        this.gameOver == true
     }
     else{
         console.log("error")
@@ -198,6 +219,7 @@ update() {
         //used for testing
         //this.football.body.setVelocityX(-300)
 
+    if(!this.gameOver){
         //if the kicker kicks the ball
         if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
             this.kicker.play('kick')
@@ -224,7 +246,6 @@ update() {
         if (this.football.y < 0 || this.football.y > this.sys.game.config.height) {
             this.resetFootball("kicker")
             this.qb.play('qbIdle')
-            this.victoryScreen(this.kickerScore, "kicker")
         }
 
 /*      //BUG: when the kicker kicks the ball, it goes way over 100 points depening on the hitbox    
@@ -241,7 +262,7 @@ update() {
         if (this.football.x < 0 || this.football.x > this.sys.game.config.width) {
             this.resetFootball("qb")
             this.qb.play('qbIdle')
-            this.victoryScreen(this.qbScore, "qb")
         }
+    }
 }
 }
