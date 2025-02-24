@@ -139,8 +139,8 @@ firstQBThrow(){
             callback: () => {
                 this.sound.play('qbThrow')
                 this.qb.play('throw')
-                //this.football.setVelocity(-300,0)
-                this.football.setVelocity((Phaser.Math.Between(-300, -800)), 0)
+                this.football.setVelocity(-300,0)
+                //this.football.setVelocity((Phaser.Math.Between(-300, -800)), 0)
                 },
             callbackScope: this,
             loop: false,               //to perform this only once
@@ -173,8 +173,8 @@ resetFootball(player, pixelTextFont) {
             callback: () => {
                 this.sound.play('qbThrow')
                 this.qb.play('throw')
-                //this.football.setVelocity(-300,0)
-                this.football.setVelocity((Phaser.Math.Between(-300, -800)), 0)
+                //this.football.setVelocity(-300,0) 
+                this.football.setVelocity((Phaser.Math.Between(-300, -1000)), 0)
             },
             callbackScope: this
         })
