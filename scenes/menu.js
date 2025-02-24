@@ -18,7 +18,6 @@ class Menu extends Phaser.Scene {
         this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
         this.leftkey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT)
         this.rightkey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT)
-        this.Rkey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R)
     }
 
     update() {
