@@ -9,31 +9,6 @@ class Play extends Phaser.Scene {
 
     preload(){
 
-        this.load.path = './assets/'
-        
-        this.load.image('player','img/Player.png')
-        this.load.image('football','img/football.png')
-
-        this.load.audio('kickSound','sfx/kickSound.mp3')
-        this.load.audio('kickerScoreSound','sfx/kickerScoreSound.wav')
-        this.load.audio('qbScoreSound','sfx/qbScoreSound.wav')
-        this.load.audio('victorySound1','sfx/victorySound1.mp3')
-        this.load.audio('victorySound2','sfx/victorySound2.mp3')
-        this.load.audio('qbThrow','sfx/qbThrow.wav')
-
-        this.kickSoundFlag = false
-
-        //to load the bitmap font for the Press Start P2 text
-        this.load.bitmapFont('pixelKey', 'fonts/pixelText.png', 'fonts/pixelText.xml')
-
-        this.load.spritesheet('kicker','/img/kicker.png',{
-            frameWidth: 44,
-            frameHeight: 54,
-        })
-        this.load.spritesheet('qb','img/qb.png',{
-            frameWidth: 44,
-            frameHeight: 54,
-        })
     }
 
 //width: 1000, x
