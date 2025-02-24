@@ -66,7 +66,7 @@ class Load extends Phaser.Scene {
         this.time.addEvent({
             delay: 5000,
             callback: () => {
-                this.scene.start('playScene') //its set to play scene for testing
+                this.scene.start('menuScene') //its set to play scene for testing
             },
             callbackScope: this
         })
