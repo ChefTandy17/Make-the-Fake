@@ -15,6 +15,13 @@ class Play extends Phaser.Scene {
         this.load.image('football','img/football.png')
 
         this.load.audio('kickSound','sfx/kickSound.mp3')
+        this.load.audio('kickerScoreSound','sfx/kickerScoreSound.wav')
+        this.load.audio('qbScoreSound','sfx/qbScoreSound.wav')
+        this.load.audio('victorySound1','sfx/victorySound1.mp3')
+        this.load.audio('victorySound2','sfx/victorySound2.mp3')
+        this.load.audio('qbThrow','sfx/qbThrow.wav')
+
+        this.kickSoundFlag = false
 
         //to load the bitmap font for the Press Start P2 text
         this.load.bitmapFont('pixelKey', 'fonts/pixelText.png', 'fonts/pixelText.xml')
@@ -41,6 +48,8 @@ class Play extends Phaser.Scene {
 
     //to create an invisible barrier in the middle
     let invisibleBarrierMiddle = this.physics.add.sprite(500, 1).setOrigin(0).setSize(1, 1000).setVisible(false)
+
+    //let kickSoundDetector = this.physics.add.sprite(0, 100).setOrigin(0).setSize(1000, 1).setVisible(false)
 
 /*  used for testing
     this.add.bitmapText(centerX, centerY, 'pixelKey', 'Hello').setOrigin(0.5)
@@ -153,6 +162,7 @@ firstQBThrow(){
         this.time.addEvent({
             delay: Phaser.Math.Between(1000, 5000),
             callback: () => {
+                this.sound.play('qbThrow')
                 this.qb.play('throw')
                 this.football.setVelocity(-300,0)
                 },
@@ -168,10 +178,12 @@ resetFootball(player, pixelTextFont) {
     this.football.setVelocity(0, 0)
 
     if (player == 'kicker') {
+        this.sound.play('kickerScoreSound')
         this.kickerScore += 100
         this.kickerScoreText.setText("P1:" + this.kickerScore)
     } 
     else if (player == 'qb') {
+        this.sound.play('qbScoreSound')
         this.qbScore += 100
         this.qbScoreText.setText("P2:" + this.qbScore)
     }
@@ -183,6 +195,7 @@ resetFootball(player, pixelTextFont) {
         this.time.addEvent({
             delay: Phaser.Math.Between(2000, 4000),
             callback: () => {
+                this.sound.play('qbThrow')
                 this.qb.play('throw')
                 this.football.setVelocity(-300, 0)
             },
@@ -216,6 +229,7 @@ this.qbScoreText = this.add.bitmapText(550, 450, 'pixelKey', 'P2:000', 40).setTi
         let kickerVictory = this.add.bitmapText(centerX, centerY, pixelTextFont, "KICKER VICTORY", 40).setTintFill(0xffffff).setOrigin(0.5)
         kickerVictory.setDepth(1)
         console.log("in kicker")
+        this.sound.play('victorySound1')
         this.gameOver = true
     }
     else if(player = 'qb' && checkQBScore >= 1000){
@@ -223,8 +237,10 @@ this.qbScoreText = this.add.bitmapText(550, 450, 'pixelKey', 'P2:000', 40).setTi
         let qbVictory = this.add.bitmapText(centerX, centerY, pixelTextFont, "QUARTERBACK VICTORY", 35).setTintFill(0xffffff).setOrigin(0.5)
         qbVictory.setDepth(1)
         console.log("in qb")
+        this.sound.play('victorySound1')
         this.gameOver = true
     }
+
     //NOTE: if main menu scene exist, sent it to main menu scene
     if(this.gameOver){
         //to restart the play scene
