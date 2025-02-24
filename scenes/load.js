@@ -5,19 +5,6 @@ class Load extends Phaser.Scene {
 
     preload() {
         
-        //used Nathan Altice Paddle Parkcour with modifcations to help create the loading screen
-        this.bmoColor = this.add.rectangle(centerX, centerY, 1000, 500, 0xD9FDDC).setOrigin(0.5)
-
-        let loadingBar = this.add.graphics()
-        this.load.on('progress', (value) => {
-            loadingBar.clear()                                 
-            loadingBar.fillStyle(0x000000, 1);                  
-            loadingBar.fillRect(0, centerY, game.config.width * value, 5);  
-        });
-        this.load.on('complete', () => {
-            loadingBar.destroy()
-        });
-
         this.load.path = './assets/'
         
         this.load.image('player','img/Player.png')
@@ -30,6 +17,8 @@ class Load extends Phaser.Scene {
         this.load.audio('victorySound2','sfx/victorySound2.mp3')
         this.load.audio('qbThrow','sfx/qbThrow.wav')
         this.load.audio('bmoVL',"sfx/bmoIntro.mp3")
+
+        this.load.audio('backgroundMusic',"sfx/menuBackgroundMusic.mp3")
 
         this.kickSoundFlag = false
 
@@ -44,6 +33,19 @@ class Load extends Phaser.Scene {
             frameWidth: 44,
             frameHeight: 54,
         })
+
+        //used Nathan Altice Paddle Parkcour with modifcations to help create the loading screen
+        this.bmoColor = this.add.rectangle(centerX, centerY, 1000, 500, 0xD9FDDC).setOrigin(0.5)
+
+        let loadingBar = this.add.graphics()
+        this.load.on('progress', (value) => {
+            loadingBar.clear()                                 
+            loadingBar.fillStyle(0x000000, 1)                  
+            loadingBar.fillRect(0, centerY, game.config.width * value, 5)
+        });
+        this.load.on('complete', () => {
+            loadingBar.destroy()
+        });
 
     }
     create() {
@@ -64,7 +66,7 @@ class Load extends Phaser.Scene {
 
         //go to the main menu scene
         this.time.addEvent({
-            delay: 5000,
+            delay: 4500,
             callback: () => {
                 this.scene.start('menuScene') //its set to play scene for testing
             },

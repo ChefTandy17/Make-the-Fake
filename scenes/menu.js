@@ -22,6 +22,13 @@ class Menu extends Phaser.Scene {
     }
 
     create() {
+
+        this.backgroundMusic = this.sound.add('backgroundMusic',{
+            volume: 0.5,
+            loop: true,
+        })
+        this.backgroundMusic.play()
+
         this.anims.create({
             key: 'spin',
             frames: this.anims.generateFrameNumbers('footballSpritesheet', { 
@@ -39,19 +46,22 @@ class Menu extends Phaser.Scene {
 
         this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
         this.leftkey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT)
-        this.rightkey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT)
+        //this.rightkey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT)
     }
 
     update() {
 
         if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
-            this.scene.start('playScene');
+            this.sound.play('kickerScoreSound')
+            this.backgroundMusic.pause()
+            this.scene.start('playScene')
         }
         if (Phaser.Input.Keyboard.JustDown(this.leftkey)) {
+            this.sound.play('kickerScoreSound')
             this.scene.start('tutorialScene')
         }
-        if (Phaser.Input.Keyboard.JustDown(this.rightkey)) {
-            this.scene.start('creditsScene')
-        }
+        //if (Phaser.Input.Keyboard.JustDown(this.rightkey)) {
+        //    this.scene.start('creditsScene')
+        //}
     }
 }
