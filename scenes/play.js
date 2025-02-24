@@ -282,8 +282,15 @@ update() {
         this.physics.add.collider(this.kicker, this.football, (kicker, football) => {
             if(!this.kickSoundFlag){
                 this.sound.play('kickSound')
-                this.kickSoundFlag = true
             }
+            this.kickSoundFlag = true
+            this.time.addEvent({
+                delay: 100,
+                callback: () => {
+                    this.kickSoundFlag = false
+                    },
+                callbackScope: this
+            })
             this.football.setVelocity(0,-300)
         })
 
