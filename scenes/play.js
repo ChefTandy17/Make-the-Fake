@@ -280,7 +280,10 @@ update() {
 
 
         this.physics.add.collider(this.kicker, this.football, (kicker, football) => {
-            this.sound.play('kickSound')
+            if(!this.kickSoundFlag){
+                this.sound.play('kickSound')
+                this.kickSoundFlag = true
+            }
             this.football.setVelocity(0,-300)
         })
 
