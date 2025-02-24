@@ -174,7 +174,7 @@ resetFootball(player, pixelTextFont) {
                 this.sound.play('qbThrow')
                 this.qb.play('throw')
                 //this.football.setVelocity(-300,0) 
-                this.football.setVelocity((Phaser.Math.Between(-300, -1000)), 0)
+                this.football.setVelocity((Phaser.Math.Between(-500, -1200)), 0)
             },
             callbackScope: this
         })
