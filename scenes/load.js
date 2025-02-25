@@ -9,6 +9,7 @@ class Load extends Phaser.Scene {
         
         this.load.image('player','img/Player.png')
         this.load.image('football','img/football.png')
+        this.load.image('kickParticle', 'img/kickParticle.png')
 
         this.load.audio('kickSound','sfx/kickSound.mp3')
         this.load.audio('kickerScoreSound','sfx/kickerScoreSound.wav')
@@ -38,9 +39,9 @@ class Load extends Phaser.Scene {
         this.blackScreen = this.add.rectangle(centerX, centerY, 1000, 500, 0x000000).setOrigin(0.5)
         
         let loadingBar = this.add.graphics()            
-        this.load.on('progress', (value) => {   
+        this.load.on('progress', (value) => {  
             loadingBar.clear()                                 
-            loadingBar.fillStyle(0x143d07, 1)                  
+            loadingBar.fillStyle(0xD9FDDC, 1)                  
             //loadingBar.fillRect(0, centerY, game.config.width * value, 5)
             loadingBar.fillRect(0, 0, game.config.width * value, 1000)
         });
@@ -70,7 +71,7 @@ class Load extends Phaser.Scene {
 
         //go to the main menu scene
         this.time.addEvent({
-            delay: 4500,
+            delay: 4400,
             callback: () => {
                 this.scene.start('menuScene') //its set to play scene for testing
             },

@@ -12,6 +12,11 @@ class Menu extends Phaser.Scene {
         this.directionCredits = this.add.bitmapText(centerX, centerY / 2 + 260, 'pixelKey', 'PRESS RIGHT ARROW KEY FOR CREDITS', 29).setTintFill(0x63727a).setOrigin(0.5)
         this.play = this.add.bitmapText(centerX, centerY / 2 + 320, 'pixelKey', 'PRESS SPACE TO PLAY', 40).setTintFill(0xfdbb30).setOrigin(0.5);
 
+        this.backgroundMusic = this.sound.add('backgroundMusic',{
+            volume: 0.5,
+            loop: true,
+        })
+        this.backgroundMusic.play()
 
         this.load.image('footballMenu','assets/img/football.png')
 
@@ -22,12 +27,6 @@ class Menu extends Phaser.Scene {
     }
 
     create() {
-
-        this.backgroundMusic = this.sound.add('backgroundMusic',{
-            volume: 0.5,
-            loop: true,
-        })
-        this.backgroundMusic.play()
 
         this.anims.create({
             key: 'spin',
@@ -58,6 +57,7 @@ class Menu extends Phaser.Scene {
         }
         if (Phaser.Input.Keyboard.JustDown(this.leftkey)) {
             this.sound.play('kickerScoreSound')
+            this.backgroundMusic.pause()
             this.scene.start('tutorialScene')
         }
         //if (Phaser.Input.Keyboard.JustDown(this.rightkey)) {

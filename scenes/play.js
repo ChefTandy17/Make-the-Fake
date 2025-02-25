@@ -15,7 +15,7 @@ class Play extends Phaser.Scene {
 //height: 500, y
 
     create() {
-    
+
     //to create the background for the game
     this.scoringRect = this.add.rectangle(500, 480, 1000, 100, 0x000000) // x, y, width, height, color
     this.purpleRect = this.add.rectangle(500, 330, 1000, 100, 0xdf57f6)
@@ -174,7 +174,7 @@ resetFootball(player, pixelTextFont) {
                 this.sound.play('qbThrow')
                 this.qb.play('throw')
                 //this.football.setVelocity(-300,0) 
-                this.football.setVelocity((Phaser.Math.Between(-500, -1200)), 0)
+                this.football.setVelocity((Phaser.Math.Between(-300, -1200)), 0)
             },
             callbackScope: this
         })
@@ -259,6 +259,15 @@ update() {
         this.physics.add.collider(this.kicker, this.football, (kicker, football) => {
             if(!this.kickSoundFlag){
                 this.sound.play('kickSound')
+                const kickParticle = this.add.particles(this.football.x, this.football.y, 'kickParticle', {
+                    lifespan: 1000,
+                    speed: { min: 150, max: 250 },
+                    scale: { start:1 , end: 0 },
+                    gravityY: 500,
+                    blendMode: 'ADD',
+                    emitting: false
+                })
+                kickParticle.explode(10)
             }
             this.kickSoundFlag = true
             this.time.addEvent({
@@ -268,7 +277,7 @@ update() {
                     },
                 callbackScope: this
             })
-            this.football.setVelocity(0,-300)
+            this.football.setVelocity(0,-500)
         })
 
         //the kicker gets 100 points everytime the football is out of bounds
