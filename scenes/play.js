@@ -203,16 +203,20 @@ this.qbScoreText = this.add.bitmapText(550, 450, 'pixelKey', 'P2:000', 40).setTi
 
     if(player == "kicker" && checkKickerScore >= 1000){
         //this.add.bitmaptext(centerX / 2, centerY / 2, "KICKER VICTORY", pixelTextFont).setOrigin(0.5)
-        let kickerVictory = this.add.bitmapText(centerX, centerY, pixelTextFont, "KICKER VICTORY", 40).setTintFill(0xffffff).setOrigin(0.5)
-        kickerVictory.setDepth(1)
+        let kickerVictoryYellow = this.add.bitmapText(centerX, centerY, pixelTextFont, "KICKER VICTORY", 39.5).setTintFill(0xfDc72c).setOrigin(0.5)
+        let kickerVictoryBlue = this.add.bitmapText(centerX, centerY, pixelTextFont, "KICKER VICTORY", 40).setTintFill(0x1D428A).setOrigin(0.5)
+        kickerVictoryYellow.setDepth(1)
+        kickerVictoryBlue.setDepth(2)
         console.log("in kicker")
         this.sound.play('victorySound1')
         this.gameOver = true
     }
     else if(player = 'qb' && checkQBScore >= 1000){
         //this.add.bitmaptext(centerX / 2, centerY / 2, "QUARTERBACK VICTORY", pixelTextFont).setOrigin(0.5)
-        let qbVictory = this.add.bitmapText(centerX, centerY, pixelTextFont, "QUARTERBACK VICTORY", 35).setTintFill(0xffffff).setOrigin(0.5)
-        qbVictory.setDepth(1)
+        let qbVictoryBlue = this.add.bitmapText(centerX, centerY, pixelTextFont, "QUARTERBACK VICTORY", 34.5).setTintFill(0x1D428A).setOrigin(0.5)
+        let qbVictoryYellow = this.add.bitmapText(centerX, centerY, pixelTextFont, "QUARTERBACK VICTORY", 35).setTintFill(0xfDc72c).setOrigin(0.5)
+        qbVictoryBlue.setDepth(1)
+        qbVictoryYellow.setDepth(1)
         console.log("in qb")
         this.sound.play('victorySound1')
         this.gameOver = true
@@ -224,7 +228,8 @@ this.qbScoreText = this.add.bitmapText(550, 450, 'pixelKey', 'P2:000', 40).setTi
         this.time.addEvent({
             delay: 7000,
             callback: () => {
-                this.scene.restart()
+                this.scene.start('menuScene');
+                //this.scene.restart()
             },
             callbackScope: this
         })
