@@ -31,8 +31,8 @@ class Menu extends Phaser.Scene {
         this.anims.create({
             key: 'spin',
             frames: this.anims.generateFrameNumbers('footballSpritesheet', { 
-                start: 1, 
-                end: 10 
+                start: 0, 
+                end: 8 
             }),
             frameRate: 10,
             repeat: -1

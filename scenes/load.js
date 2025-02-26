@@ -47,13 +47,13 @@ class Load extends Phaser.Scene {
         });
         this.load.on('complete', () => {
             loadingBar.destroy()
-        });
+        })
 
     }
     create() {
 
         this.bmoColor = this.add.rectangle(centerX, centerY, 1000, 500, 0xD9FDDC).setOrigin(0.5)
-        //let.eyes = this.add.graphics()
+        //let eyes = this.add.graphics()
 
         // Create BMO's face from Adventure Time
         this.leftEye = this.add.ellipse(centerX - 200, centerY - 50, 30, 50, 0x000000)
