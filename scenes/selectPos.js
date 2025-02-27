@@ -9,7 +9,7 @@ class SelectPos extends Phaser.Scene {
         this.titleScreenBlue = this.add.bitmapText(centerX, centerY / 6, 'pixelKey', 'PRO FOOTBALL 1861', 50.50).setTintFill(0x002b5c).setOrigin(0.5)
 
         this.easyModeText = this.add.bitmapText(10,  100, 'pixelKey', '-PRESS ONE: TO BE KICKER', 30).setTintFill(0x002b5c)
-        this.mediumModeText = this.add.bitmapText(10, 150, 'pixelKey', '-PRESS TWO: TO BE QUARTERBACK(CS)', 30).setTintFill(0x000000) //0xe31837
+        this.mediumModeText = this.add.bitmapText(10, 150, 'pixelKey', '-PRESS TWO: TO BE QUARTERBACK', 30).setTintFill(0xe31837) 
 
         this.spacebarKey = this.add.bitmapText(10, 230, 'pixelKey', '-PRESS SPACE: TO PLAYER SELECTION', 30).setTintFill(0xfdbb30)
     }
@@ -38,10 +38,10 @@ class SelectPos extends Phaser.Scene {
             this.sound.play('kickerScoreSound')
             this.scene.start('qbDifficultyScene')
         }
+        //if the player wants to be the kicker
         if (Phaser.Input.Keyboard.JustDown(this.twoKey)) {
             this.sound.play('kickerScoreSound')
             this.scene.start('kickerDifficultyScene')
-            //playQBScene
         }
         if (Phaser.Input.Keyboard.JustDown(this.spacebarKey)) {
             this.scene.start('numPlayersScene')

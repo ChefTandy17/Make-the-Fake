@@ -4,7 +4,7 @@ class PlayQB extends Phaser.Scene {
     }
 
     init(){
-
+        this.qbVelocity = 0
     }
 
     preload(){
@@ -19,7 +19,7 @@ class PlayQB extends Phaser.Scene {
     this.yellowRect = this.add.rectangle(500, 0, 1000, 250, 0xf4f976)
 
     //to make the kicker kick the ball sprite, (when the football collides with the invis barrier)
-    let triggerKickBarrier = this.physics.add.sprite(300, 1).setOrigin(0).setSize(1, 1000).setVisible(false)
+    this.triggerKickBarrier = this.physics.add.sprite(300, 1).setOrigin(0).setSize(1, 1000).setVisible(false)
 
     this.kickerScore = 0
     this.qbScore = 0
@@ -165,12 +165,14 @@ victoryScreen(checkKickerScore, checkQBScore, player, pixelTextFont){
 update() {
 
     if(!this.gameOver){
-
-        this.qbVelocity = 0
-        this.qbAutoThrowTimer = 10
+ 
+        if (this.qbAutoThrowTimer == undefined) {
+            this.qbAutoThrowTimer = 10
+        }
         
         if (this.qbAutoThrowTimer > 0) {
             this.qbAutoThrowTimer -= this.game.loop.delta / 1000
+            console.log(`Timer: ${this.qbAutoThrowTimer}`)
         }
 
         if(Phaser.Input.Keyboard.JustDown(this.upKey)){
@@ -203,21 +205,20 @@ update() {
             this.leftKey.enabled = false
 
             //throw the football in the custom user velocity
-            this.football.setVelocity(-qbVelocity, 0)
+            this.football.setVelocity(this.qbVelocity, 0)
 
             //when the invisible barrier collides with the football...
             this.physics.add.collider(this.triggerKickBarrier, this.football, (triggerKickBarrier, football) => {
                 //...set a random delay when the kicker AI kicks the ball
                     this.time.addEvent({
-                        delay: Phaser.Math.Between(300, 8000),
+                        delay: game.settingsKicker.kickerReaction,
                         callback: () => {
                             this.kicker.play('kick')
                             this.kicker.setSize(5, 5)
                             this.kicker.setOffset(25, 14)
                             },
                         callbackScope: this
-                    })
-                                
+                    })                            
                 //to remove the collision hitbox at a certain point in time
                     this.time.addEvent({
                         delay: 500,
@@ -262,7 +263,8 @@ update() {
                         },
                     callbackScope: this
                 })
-                this.football.setVelocity(0, game.settingsQB.footballKickedVelocity)
+                //to set the football kick upwards
+                this.football.setVelocity(0, game.settingsKicker.footballKickedVelocity)
             })
 
             //the kicker gets 100 points everytime the football is out of bounds
@@ -283,8 +285,6 @@ update() {
                 this.leftKey.enabled = true
             }
         }
-    
-
 
     }
 }
