@@ -54,7 +54,7 @@ class Menu extends Phaser.Scene {
             this.sound.play('kickerScoreSound')
             this.backgroundMusic.pause()
             //this.scene.start('playScene')
-            this.scene.start('difficultyScene')
+            this.scene.start('numPlayersScene')
         }
         if (Phaser.Input.Keyboard.JustDown(this.leftkey)) {
             this.sound.play('kickerScoreSound')
