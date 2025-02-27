@@ -4,7 +4,7 @@ class PlayQB extends Phaser.Scene {
     }
 
     init(){
-        this.qbVelocity = 0
+
     }
 
     preload(){
@@ -13,6 +13,8 @@ class PlayQB extends Phaser.Scene {
 
     create() {
 
+    this.qbVelocity = 0
+
     //to create the background for the game
     this.scoringRect = this.add.rectangle(500, 480, 1000, 100, 0x000000) // x, y, width, height, color
     this.purpleRect = this.add.rectangle(500, 330, 1000, 100, 0xdf57f6)
@@ -20,6 +22,7 @@ class PlayQB extends Phaser.Scene {
 
     //to make the kicker kick the ball sprite, (when the football collides with the invis barrier)
     this.triggerKickBarrier = this.physics.add.sprite(300, 1).setOrigin(0).setSize(1, 1000).setVisible(false)
+    this.triggerKickBarrier.body.setImmovable(true)
 
     this.kickerScore = 0
     this.qbScore = 0
@@ -33,7 +36,7 @@ class PlayQB extends Phaser.Scene {
 
     //maybe to be used to increase or decrease the time
     this.leftKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT)
-    this.leftKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT)
+    this.rightKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT)
 
     this.kicker = this.physics.add.sprite(200,240, 'kicker')
     this.kicker.setScale(6)
@@ -167,12 +170,12 @@ update() {
     if(!this.gameOver){
  
         if (this.qbAutoThrowTimer == undefined) {
-            this.qbAutoThrowTimer = 10
+            this.qbAutoThrowTimer = 2
         }
         
         if (this.qbAutoThrowTimer > 0) {
             this.qbAutoThrowTimer -= this.game.loop.delta / 1000
-            console.log(`Timer: ${this.qbAutoThrowTimer}`)
+            //console.log(`Timer: ${this.qbAutoThrowTimer}`)
         }
 
         if(Phaser.Input.Keyboard.JustDown(this.upKey)){
@@ -182,19 +185,19 @@ update() {
 
         if(Phaser.Input.Keyboard.JustDown(this.downKey)){
             //to ensure the player doesn't hit positive velocity
-            if(this.qbVelocity >= 0){
-                this.qbVelocity += 5
+            if(this.qbVelocity <= 0){
+                this.qbVelocity += 1
                 console.log(`Velocity decreased to: ${this.qbVelocity}`);
             }
             else{
-                this.qbVelocity += 1
+                this.qbVelocity += 5
                 console.log(`Velocity is in min: ${this.qbVelocity}`);
             }
         }
 
         if(Phaser.Input.Keyboard.JustDown(this.leftKey)){
             this.qbAutoThrowTimer = Math.max(0,this.qbAutoThrowTimer - 1)
-            console.log(`Timer decreased to: ${this.qbAutoThrowTimer}`)
+            console.log(`Timer decreased from: ${this.qbAutoThrowTimer + 1}, to: ${this.qbAutoThrowTimer}`)
         }
 
         if(this.qbAutoThrowTimer < 0){ 
@@ -207,8 +210,8 @@ update() {
             //throw the football in the custom user velocity
             this.football.setVelocity(this.qbVelocity, 0)
 
-            //when the invisible barrier collides with the football...
-            this.physics.add.collider(this.triggerKickBarrier, this.football, (triggerKickBarrier, football) => {
+            //when the invisible barrier overlap with the football...
+            this.physics.add.overlap(this.triggerKickBarrier, this.football, (triggerKickBarrier, football) => {
                 //...set a random delay when the kicker AI kicks the ball
                     this.time.addEvent({
                         delay: game.settingsKicker.kickerReaction,
@@ -243,6 +246,8 @@ update() {
                         })
 
             this.physics.add.collider(this.kicker, this.football, (kicker, football) => {
+                //to set the football kick upwards
+                this.football.setVelocityY(-500)
                 if(!this.kickSoundFlag){
                     this.sound.play('kickSound')
                     const kickParticle = this.add.particles(this.football.x, this.football.y, 'kickParticle', {
@@ -263,9 +268,8 @@ update() {
                         },
                     callbackScope: this
                 })
-                //to set the football kick upwards
-                this.football.setVelocity(0, game.settingsKicker.footballKickedVelocity)
             })
+
 
             //the kicker gets 100 points everytime the football is out of bounds
             if (this.football.y < 0 || this.football.y > this.sys.game.config.height) {
