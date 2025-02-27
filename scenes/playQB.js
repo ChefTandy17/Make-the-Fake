@@ -14,6 +14,7 @@ class PlayQB extends Phaser.Scene {
     create() {
 
     this.qbVelocity = -200
+    this.gameSceneFlag = false
 
     //to create the background for the game
     this.scoringRect = this.add.rectangle(500, 480, 1000, 100, 0x000000) // x, y, width, height, color
@@ -108,13 +109,14 @@ class PlayQB extends Phaser.Scene {
 }
 
 resetFootball(player, pixelTextFont) {
+    this.gameSceneFlag = false
     this.football.body.updateFromGameObject()
     this.football.body.stop()
     this.football.setVelocity(0, 0)
     this.football.setPosition(770, 150)
 
     this.qbVelocity = -200
-    this.qbAutoThrowTimer = 5
+    this.qbAutoThrowTimer = 15
     this.upKey.enabled = true
     this.downKey.enabled = true
     this.leftKey.enabled = true
@@ -171,6 +173,13 @@ victoryScreen(checkKickerScore, checkQBScore, player, pixelTextFont){
     }
 
 }
+/*
+game.settingsKicker = {
+    kickerReaction: (Phaser.Math.Between(8000, 10000)),
+    kickerResetPos: (Phaser.Math.Between(1000, 1200)),
+    kickerIdlePos:  (Phaser.Math.Between(1200, 1400))
+}
+*/
 
 update() {
 
@@ -199,18 +208,23 @@ update() {
             }
         }
 
+
         if(this.qbAutoThrowTimer < 0){ 
         //to disable the keys
             this.upKey.enabled = false
             this.downKey.enabled = false
 
             this.leftKey.enabled = false
+            this.gameSceneFlag = true
+        }
 
+        if(this.gameSceneFlag == true){
             //throw the football in the custom user velocity
             this.football.setVelocity(this.qbVelocity, 0)
 
+            //kick animation
             this.time.addEvent({
-                delay: 2,
+                delay: game.settingsKicker.kickerReaction,
                 callback: () => {
                     this.kicker.play('kick')
                     this.kicker.setSize(5, 5)
@@ -220,7 +234,7 @@ update() {
             })                            
             //to remove the collision hitbox at a certain point in time
             this.time.addEvent({
-                delay: 500,
+                delay: game.settingsKicker.kickerResetPos,
                 callback: () => {
                     this.kicker.play('kick')
                     this.kicker.body.setSize(5, 5)
@@ -231,7 +245,7 @@ update() {
                     
             //to set the kicker position to idle
             this.time.addEvent({
-                delay: 1500,
+                delay: game.settingsKicker.kickerIdlePos,
                     callback: () => {
                         this.kicker.play('kickerIdle')
                         this.kicker.body.setSize(5, 5)
@@ -243,7 +257,7 @@ update() {
                 this.physics.add.collider(this.kicker, this.football, (kicker, football) => {
                        
                     // Kick the football up
-                    this.qbAutoThrowTimer = 0.5
+                    this.qbAutoThrowTimer = 2
                     this.football.body.stop()
                     this.football.setVelocity(0, 0)
                     this.qbVelocity = 0
@@ -279,18 +293,19 @@ update() {
 
             //the kicker gets 100 points everytime the football is out of bounds
             if (this.football.y < 0 || this.football.y > this.sys.game.config.height) {
+                this.gameSceneFlag = false
                 this.resetFootball("kicker", 'pixelKey')
                 this.qb.play('qbIdle')
             }
 
             //the qb gets 100 points everytime the football is out of bounds
             if (this.football.x < 0 || this.football.x > this.sys.game.config.width) {
+                this.gameSceneFlag = false
                 this.resetFootball("qb",'pixelKey')
                 this.qb.play('qbIdle')
 
             }
         }
-
     }
 }
 }
