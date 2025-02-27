@@ -9,11 +9,11 @@ class DifficultyQB extends Phaser.Scene {
         this.titleScreenBlue = this.add.bitmapText(centerX, centerY / 6, 'pixelKey', 'PRO FOOTBALL 1861', 50.50).setTintFill(0x002b5c).setOrigin(0.5)
 
         
-        this.easyModeText = this.add.bitmapText(10,  100, 'pixelKey', '-PRESS ONE FOR BEGINNER MODE', 30).setTintFill(0x808080)
-        this.mediumModeText = this.add.bitmapText(10, 150, 'pixelKey', '-PRESS TWO FOR INTERMEDIATE MODE', 30).setTintFill(0x002b5c)
-        this.expertModeText = this.add.bitmapText(10, 200, 'pixelKey', '-PRESS THREE FOR EXPERT MODE', 30).setTintFill(0xe31837)
+        this.easyModeText = this.add.bitmapText(10,  100, 'pixelKey', '-PRESS ONE: FOR BEGINNER MODE', 30).setTintFill(0x808080)
+        this.mediumModeText = this.add.bitmapText(10, 150, 'pixelKey', '-PRESS TWO: FOR INTERMEDIATE MODE', 30).setTintFill(0x002b5c)
+        this.expertModeText = this.add.bitmapText(10, 200, 'pixelKey', '-PRESS THREE: FOR EXPERT MODE', 30).setTintFill(0xe31837)
 
-        this.spacebarKey = this.add.bitmapText(10, 250, 'pixelKey', '-PRESS SPACE BAR TO\n POSITIONS', 30).setTintFill(0xfdbb30)
+        this.spacebarKey = this.add.bitmapText(10, 250, 'pixelKey', '-PRESS SPACE: TO POSITIONS', 30).setTintFill(0xfdbb30)
     }
 
     create() {
@@ -38,7 +38,7 @@ class DifficultyQB extends Phaser.Scene {
                 footballKickedVelocity: -500,    
             }
             this.sound.play('kickerScoreSound')
-            this.scene.start('playScene')
+            this.scene.start('playKickerScene')
         }
         //intermediate mode
         if (Phaser.Input.Keyboard.JustDown(this.twoKey)) {
@@ -47,7 +47,7 @@ class DifficultyQB extends Phaser.Scene {
                 footballKickedVelocity: -900,    
             }
             this.sound.play('kickerScoreSound')
-            this.scene.start('playScene')
+            this.scene.start('playKickerScene')
         }
         //expert mode
         if (Phaser.Input.Keyboard.JustDown(this.threeKey)) {
@@ -56,7 +56,7 @@ class DifficultyQB extends Phaser.Scene {
                 footballKickedVelocity: -1200,    
             }
             this.sound.play('kickerScoreSound')
-            this.scene.start('playScene')
+            this.scene.start('playKickerScene')
         }
 
         //back to previous scene

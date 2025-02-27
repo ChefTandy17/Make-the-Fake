@@ -8,9 +8,9 @@ class NumPlayers extends Phaser.Scene {
         this.titleScreenRed = this.add.bitmapText(centerX, centerY / 6, 'pixelKey', 'PRO FOOTBALL 1861', 50).setTintFill(0xe31837).setOrigin(0.5)
         this.titleScreenBlue = this.add.bitmapText(centerX, centerY / 6, 'pixelKey', 'PRO FOOTBALL 1861', 50.50).setTintFill(0x002b5c).setOrigin(0.5)
 
-        this.onePlayerModeText = this.add.bitmapText(10,  100, 'pixelKey', '-PRESS ONE FOR SINGLE PLAYER', 30).setTintFill(0x002b5c)
-        this.twoPlayerModeText = this.add.bitmapText(10, 150, 'pixelKey', '-PRESS TWO FOR TWO PLAYER (CS)', 30).setTintFill(0x000000) //0xe31837
-        this.backToMenuText = this.add.bitmapText(10, 230, 'pixelKey', '-PRESS SPACE TO MENU', 30).setTintFill(0xfdbb30)
+        this.onePlayerModeText = this.add.bitmapText(10,  100, 'pixelKey', '-PRESS ONE: FOR SINGLE PLAYER', 30).setTintFill(0x002b5c)
+        this.twoPlayerModeText = this.add.bitmapText(10, 150, 'pixelKey', '-PRESS TWO: FOR TWO PLAYER (CS)', 30).setTintFill(0x000000) //0xe31837
+        this.backToMenuText = this.add.bitmapText(10, 230, 'pixelKey', '-PRESS SPACE: TO MENU', 30).setTintFill(0xfdbb30)
 
         this.add.image('player','assets/img/Player.png')
     }
