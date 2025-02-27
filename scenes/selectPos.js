@@ -37,14 +37,12 @@ class SelectPos extends Phaser.Scene {
         if (Phaser.Input.Keyboard.JustDown(this.oneKey)) {
             this.sound.play('kickerScoreSound')
             this.scene.start('qbDifficultyScene')
-            //this.scene.start('playScene')
         }
-        /*
         if (Phaser.Input.Keyboard.JustDown(this.twoKey)) {
             this.sound.play('kickerScoreSound')
             this.scene.start('playScene')
+            //playQBScene
         }
-        */
         if (Phaser.Input.Keyboard.JustDown(this.spacebarKey)) {
             this.scene.start('numPlayersScene')
         }
