@@ -10,38 +10,46 @@ class NumPlayers extends Phaser.Scene {
 
         this.onePlayerModeText = this.add.bitmapText(10,  100, 'pixelKey', '-PRESS ONE FOR SINGLE PLAYER', 30).setTintFill(0x002b5c)
         this.twoPlayerModeText = this.add.bitmapText(10, 150, 'pixelKey', '-PRESS TWO FOR TWO PLAYER (CS)', 30).setTintFill(0x000000) //0xe31837
-        this.backToMenuText = this.add.bitmapText(10, 200, 'pixelKey', '-PRESS SPACE TO MENU', 30).setTintFill(0xfdbb30)
+        this.backToMenuText = this.add.bitmapText(10, 230, 'pixelKey', '-PRESS SPACE TO MENU', 30).setTintFill(0xfdbb30)
 
         this.add.image('player','assets/img/Player.png')
     }
 
     create() {
 
+        this.anims.create({
+            key: 'spin',
+            frames: this.anims.generateFrameNumbers('footballSpritesheet', { 
+                start: 0, 
+                end: 8 
+            }),
+            frameRate: 10,
+            repeat: -1
+        });
+
+        this.footballSelectPlayers = this.physics.add.sprite(centerX, centerY + 100, 'footballSpritesheet');
+        this.footballSelectPlayers.setScale(12);
+        this.footballSelectPlayers.setDepth(0);
+        this.footballSelectPlayers.play('spin');
+
         this.oneKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE)
         this.twoKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO)
 
         this.spacebarKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
-
-        this.playerModelLeft = this.physics.add.sprite(centerX + 350, centerY + 200, 'player')
-        this.playerModelLeft.setFlipX(true)
-        this.playerModelLeft.setScale(8)
-
-        this.playerModelRight = this.physics.add.sprite(centerX - 350, centerY + 200, 'player')
-        this.playerModelRight.setFlipX(false)
-        this.playerModelRight.setScale(8)
-
-        //this.football = this.physics.add.sprite(centerX, centerY + 200,'football')
-        //this.football.setScale(6)
- 
     }
 
     update() {
 
+        //NOTE: SEND IT TO NUMPLAY -> POSITION -> DIFFICULTY -> RULES(Maybe) -> PLAY SCENE
+
+        //One player mode. Goes to position select screen
         if (Phaser.Input.Keyboard.JustDown(this.oneKey)) {
             this.sound.play('kickerScoreSound')
-            this.scene.start('playScene')
+            this.scene.start('selectPosScene')
+            //this.scene.start('playScene')
         }
         /*
+        //NOTE: SEND IT TO A DIFFERENT SCENE
         if (Phaser.Input.Keyboard.JustDown(this.twoKey)) {
             this.sound.play('kickerScoreSound')
             this.scene.start('playScene')
