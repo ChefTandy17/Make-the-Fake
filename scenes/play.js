@@ -139,7 +139,7 @@ firstQBThrow(){
             callback: () => {
                 this.sound.play('qbThrow')
                 this.qb.play('throw')
-                this.football.setVelocity(-300,0)
+                this.football.setVelocity(game.settingsQB.footballVelocity, 0)
                 //this.football.setVelocity((Phaser.Math.Between(-300, -800)), 0)
                 },
             callbackScope: this,
@@ -169,12 +169,12 @@ resetFootball(player, pixelTextFont) {
     if(!this.gameOver){
         //similar function as the firstQBThrow
         this.time.addEvent({
-            delay: Phaser.Math.Between(2000, 4000),
+            delay: Phaser.Math.Between(2000, 6000),
             callback: () => {
                 this.sound.play('qbThrow')
                 this.qb.play('throw')
                 //this.football.setVelocity(-300,0) 
-                this.football.setVelocity((Phaser.Math.Between(-300, -1200)), 0)
+                this.football.setVelocity(game.settingsQB.footballVelocity, 0)
             },
             callbackScope: this
         })
@@ -307,7 +307,7 @@ update() {
                     },
                 callbackScope: this
             })
-            this.football.setVelocity(0,-500)
+            this.football.setVelocity(0, game.settingsQB.footballKickedVelocity)
         })
 
         //the kicker gets 100 points everytime the football is out of bounds
