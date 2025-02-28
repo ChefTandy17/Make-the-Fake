@@ -100,6 +100,17 @@ class PlayKicker extends Phaser.Scene {
             repeat: 0
         })
 
+        this.physics.world.drawDebug = false;
+        this.physics.world.debugGraphic = this.add.graphics()
+    
+        // to set debug mode on or off
+        this.input.keyboard.on('keydown-D', function() {
+            this.physics.world.drawDebug = !this.physics.world.drawDebug
+            if (!this.physics.world.drawDebug) {
+                this.physics.world.debugGraphic.clear()
+            }
+        }, this)
+
         //to set up the first throw of the game (probably theres a better way, buts thats all I can come up with)
         this.firstQBThrow()
 }

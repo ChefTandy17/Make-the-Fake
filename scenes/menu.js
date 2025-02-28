@@ -46,6 +46,17 @@ class Menu extends Phaser.Scene {
         this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
         this.leftkey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT)
         this.rightkey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT)
+        
+    this.physics.world.drawDebug = false;
+    this.physics.world.debugGraphic = this.add.graphics()
+
+    // to set debug mode on or off
+    this.input.keyboard.on('keydown-D', function() {
+        this.physics.world.drawDebug = !this.physics.world.drawDebug
+        if (!this.physics.world.drawDebug) {
+            this.physics.world.debugGraphic.clear()
+        }
+    }, this)
     }
 
     update() {

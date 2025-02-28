@@ -93,6 +93,17 @@ class PlayTwoPlayer extends Phaser.Scene {
             frameRate: 1,
             repeat: 0
         })
+    
+    this.physics.world.drawDebug = false;
+    this.physics.world.debugGraphic = this.add.graphics()
+
+    // to set debug mode on or off
+    this.input.keyboard.on('keydown-D', function() {
+        this.physics.world.drawDebug = !this.physics.world.drawDebug
+        if (!this.physics.world.drawDebug) {
+            this.physics.world.debugGraphic.clear()
+        }
+    }, this)
 }
   
 

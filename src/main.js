@@ -18,7 +18,7 @@ let config = {
     physics: {
         default: 'arcade',
         arcade: {                  
-            debug: true //to set debug mode on or off             
+            debug: false //to set debug mode on or off             
         },
     },
     scene: [ Load, Menu, Credits, Tutorial, NumPlayers, SelectPos, DifficultyQB, DifficultyKicker, PlayKicker, PlayQB, PlayTwoPlayer]
