@@ -4,13 +4,13 @@ class PlayQB extends Phaser.Scene {
     }
 
     init(){
-        this.qbVelocity = -500
-        this.gameSceneFlag = false
+
     }
 
     create() {
 
-        
+    this.qbVelocity = -500
+    this.gameSceneFlag = false        
 
     //to create the background for the game
     this.scoringRect = this.add.rectangle(500, 480, 1000, 100, 0x000000) // x, y, width, height, color
@@ -101,17 +101,63 @@ class PlayQB extends Phaser.Scene {
             frameRate: 1,
             repeat: 0
         })
+
+        this.physics.add.collider(this.kicker, this.football, (kicker, football) => {
+            if(!this.kickSoundFlag){
+                this.sound.play('kickSound')
+                const kickParticle = this.add.particles(this.football.x, this.football.y, 'kickParticle', {
+                    lifespan: 1000,
+                    speed: { min: 150, max: 250 },
+                    scale: { start:1 , end: 0 },
+                    gravityY: 500,
+                    blendMode: 'ADD',
+                    emitting: false
+                })
+                kickParticle.explode(10)
+            }
+            this.kickSoundFlag = true
+            this.time.addEvent({
+                delay: 100,
+                callback: () => {
+                    this.kickSoundFlag = false
+                    },
+                callbackScope: this
+            })
+            this.football.setVelocity(0, -500)
+        })
+}
+
+increaseVelocity(){
+    this.qbVelocity -= 50
+}
+
+decreaseVelocity(){
+    if(this.qbVelocity <= -100){
+        this.qbVelocity = -100
+    }
+    else{
+        this.qbVelocity += 25
+    }
+}
+
+startGameScene(){
+    this.upKey.enabled = false
+    this.downKey.enabled = false
+    this.enterKey.enabled = false
+    this.gameSceneFlag = true
+
+    if(this.gameSceneFlag == true){
+        this.velocityScene(this.qbVelocity)
+    }
 }
 
 velocityScene(qbVelocity){
     this.football.setVelocity(qbVelocity, 0)
-    this.time.addEvent({
-        delay: 1000,
-        callback: () => {
-            this.football.setVelocity(0, -100)
-        },
-        callbackScope: this
-    })
+
+    this.kicker.play('kick')
+    this.kicker.setSize(5, 5)
+    this.kicker.setOffset(25, 14)
+
 
 
 }
@@ -187,54 +233,35 @@ game.settingsKicker = {
 }
 */
 
-update() {
-
-    this.football.setVelocity(0, 0)
-    
+update() {    
     if(!this.gameOver){ 
+
         if(Phaser.Input.Keyboard.JustDown(this.upKey)){
-            this.qbVelocity -= 50
+            this.increaseVelocity()
         }
 
         if(Phaser.Input.Keyboard.JustDown(this.downKey)){
-            //to ensure the player doesn't hit a very low velocity
-            if(this.qbVelocity <= -100){
-                this.qbVelocity = -100
-            }
-            else{
-                this.qbVelocity += 25
-            }
+            this.decreaseVelocity()
         }     
 
         if(Phaser.Input.Keyboard.JustDown(this.enterKey)){ 
-            //to disable the keys
-            this.upKey.enabled = false
-            this.downKey.enabled = false
-            this.enterKey.enabled = false
-
-            this.gameSceneFlag = true
+            this.startGameScene()
         }
 
-        if(this.gameSceneFlag == true){
-            this.velocityScene(this.qbVelocity)
+        //the kicker gets 100 points everytime the football is out of bounds
+        if (this.football.y < 0 || this.football.y > this.sys.game.config.height) {
+            this.resetFootball("kicker", 'pixelKey')
+            this.qb.play('qbIdle')
+            this.gameSceneFlag = false
+        }
 
-            //the kicker gets 100 points everytime the football is out of bounds
-            if (this.football.y < 0 || this.football.y > this.sys.game.config.height) {
-                this.gameSceneFlag = false
-                this.resetFootball("kicker", 'pixelKey')
-                this.football.setVelocity(0, 0)
-                this.qb.play('qbIdle')
-            }
-
-            //the qb gets 100 points everytime the football is out of bounds
-            if (this.football.x < 0 || this.football.x > this.sys.game.config.width) {
-                this.gameSceneFlag = false
-                this.resetFootball("qb",'pixelKey')
-                this.football.setVelocity(0, 0)
-                this.qb.play('qbIdle')
+        //the qb gets 100 points everytime the football is out of bounds
+        if (this.football.x < 0 || this.football.x > this.sys.game.config.width) {
+            this.resetFootball("qb",'pixelKey')
+            this.qb.play('qbIdle')
+            this.gameSceneFlag = false
 
             }
         }
     }
-}
 }
