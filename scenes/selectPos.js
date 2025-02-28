@@ -11,7 +11,7 @@ class SelectPos extends Phaser.Scene {
         this.easyModeText = this.add.bitmapText(10,  100, 'pixelKey', '-PRESS ONE: TO BE KICKER', 30).setTintFill(0x002b5c)
         this.mediumModeText = this.add.bitmapText(10, 150, 'pixelKey', '-PRESS TWO: TO BE QUARTERBACK', 30).setTintFill(0xe31837) 
 
-        this.spacebarKey = this.add.bitmapText(10, 230, 'pixelKey', '-PRESS SPACE: TO PLAYER SELECTION', 30).setTintFill(0xfdbb30)
+        this.spacebarKey = this.add.bitmapText(10, 230, 'pixelKey', '-PRESS SPACE: TO PLAYER SELECTION', 27).setTintFill(0xfdbb30)
     }
 
     create() {
