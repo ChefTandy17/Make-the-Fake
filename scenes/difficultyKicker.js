@@ -38,7 +38,7 @@ class DifficultyKicker extends Phaser.Scene {
         //beginner mode
         if (Phaser.Input.Keyboard.JustDown(this.oneKey)) {
             game.settingsKicker = {
-                kickerReaction: (Phaser.Math.Between(400, 1000)),
+                kickerReaction: (Phaser.Math.Between(700, 1000)),
                 //kickerResetPos: (Phaser.Math.Between(1000, 1200)),
                 kickerIdlePos: 1500
             }
@@ -48,7 +48,7 @@ class DifficultyKicker extends Phaser.Scene {
         //intermediate mode
         if (Phaser.Input.Keyboard.JustDown(this.twoKey)) {
             game.settingsKicker = {
-                kickerReaction: (Phaser.Math.Between(400, 700)),
+                kickerReaction: (Phaser.Math.Between(400, 1000)),
                 //kickerResetPos: (Phaser.Math.Between(1000, 1200)),
                 kickerIdlePos: 1500
             }
@@ -58,7 +58,7 @@ class DifficultyKicker extends Phaser.Scene {
         //expert mode
         if (Phaser.Input.Keyboard.JustDown(this.threeKey)) {
             game.settingsKicker = {
-                kickerReaction: Phaser.Math.Between(100, 600),
+                kickerReaction: Phaser.Math.Between(100, 1000),
                 //kickerResetPos: (Phaser.Math.Between(1000, 1200)),
                 kickerIdlePos: 1500
             }
