@@ -21,7 +21,7 @@ let config = {
             debug: true //to set debug mode on or off             
         },
     },
-    scene: [ Load, Menu, Credits, Tutorial, NumPlayers, SelectPos, DifficultyQB, DifficultyKicker, PlayKicker, PlayQB]
+    scene: [ Load, Menu, Credits, Tutorial, NumPlayers, SelectPos, DifficultyQB, DifficultyKicker, PlayKicker, PlayQB, PlayTwoPlayer]
 }
 
 //set up the game
