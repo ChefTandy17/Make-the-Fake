@@ -38,9 +38,9 @@ class DifficultyKicker extends Phaser.Scene {
         //beginner mode
         if (Phaser.Input.Keyboard.JustDown(this.oneKey)) {
             game.settingsKicker = {
-                kickerReaction: (Phaser.Math.Between(8000, 10000)),
-                kickerResetPos: (Phaser.Math.Between(1000, 1200)),
-                kickerIdlePos:  (Phaser.Math.Between(1200, 1400))
+                kickerReaction: (Phaser.Math.Between(400, 1000)),
+                //kickerResetPos: (Phaser.Math.Between(1000, 1200)),
+                kickerIdlePos: 1500
             }
             this.sound.play('kickerScoreSound')
             this.scene.start('playQBScene')
@@ -48,9 +48,9 @@ class DifficultyKicker extends Phaser.Scene {
         //intermediate mode
         if (Phaser.Input.Keyboard.JustDown(this.twoKey)) {
             game.settingsKicker = {
-                kickerReaction: (Phaser.Math.Between(8000, 10000)),
-                kickerResetPos: (Phaser.Math.Between(1000, 1200)),
-                kickerIdlePos:  (Phaser.Math.Between(1200, 1400))
+                kickerReaction: (Phaser.Math.Between(400, 700)),
+                //kickerResetPos: (Phaser.Math.Between(1000, 1200)),
+                kickerIdlePos: 1500
             }
             this.sound.play('kickerScoreSound')
             this.scene.start('playQBScene')
@@ -58,9 +58,9 @@ class DifficultyKicker extends Phaser.Scene {
         //expert mode
         if (Phaser.Input.Keyboard.JustDown(this.threeKey)) {
             game.settingsKicker = {
-                kickerReaction: (Phaser.Math.Between(8000, 10000)),
-                kickerResetPos: (Phaser.Math.Between(1000, 1200)),
-                kickerIdlePos:  (Phaser.Math.Between(1200, 1400))
+                kickerReaction: Phaser.Math.Between(100, 600),
+                //kickerResetPos: (Phaser.Math.Between(1000, 1200)),
+                kickerIdlePos: 1500
             }
             this.sound.play('kickerScoreSound')
             this.scene.start('playQBScene')

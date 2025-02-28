@@ -128,12 +128,17 @@ class PlayQB extends Phaser.Scene {
 }
 
 increaseVelocity(){
-    this.qbVelocity -= 50
+    if(this.qbVelocity >= 2500){
+        this.qbVelocity = -2500
+    }
+    else{
+        this.qbVelocity -= 50
+    }
 }
 
 decreaseVelocity(){
-    if(this.qbVelocity <= -100){
-        this.qbVelocity = -100
+    if(this.qbVelocity <= -500){
+        this.qbVelocity = -500
     }
     else{
         this.qbVelocity += 25
@@ -155,7 +160,7 @@ velocityScene(qbVelocity){
     this.football.setVelocity(qbVelocity, 0)
 
     this.time.addEvent({
-        delay: 500,
+        delay: game.settingsKicker.kickerReaction,
         callback: () => {
             this.kicker.play('kick')
             this.kicker.setSize(5, 5)
@@ -166,7 +171,7 @@ velocityScene(qbVelocity){
 
     //to set the kicker position to idle
     this.time.addEvent({
-        delay: 1500,
+        delay: game.settingsKicker.kickerIdlePos,
         callback: () => {
             this.kicker.play('kickerIdle')
             this.kicker.body.setSize(5, 5)
@@ -175,10 +180,18 @@ velocityScene(qbVelocity){
         callbackScope: this
     })
 
-    this.gameSceneFlag = false
+/*  maybe be used for the kicker to kick twice
+    if (this.football.y < 0 || this.football.y > this.sys.game.config.height
+        && this.football.x < 0 || this.football.x > this.sys.game.config.width){
+
+        this.gameSceneFlag = false
+    }
+*/
+
 }
 
 resetFootball(player, pixelTextFont) {
+
     this.football.body.updateFromGameObject()
     this.football.setPosition(770, 150)
     this.football.setVelocity(0, 0)
