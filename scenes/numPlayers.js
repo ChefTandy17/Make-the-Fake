@@ -9,7 +9,7 @@ class NumPlayers extends Phaser.Scene {
         this.titleScreenBlue = this.add.bitmapText(centerX, centerY / 6, 'pixelKey', 'PRO FOOTBALL 1861', 50.50).setTintFill(0x002b5c).setOrigin(0.5)
 
         this.onePlayerModeText = this.add.bitmapText(10,  100, 'pixelKey', '-PRESS ONE: FOR SINGLE PLAYER', 30).setTintFill(0x002b5c)
-        this.twoPlayerModeText = this.add.bitmapText(10, 150, 'pixelKey', '-PRESS TWO: FOR TWO PLAYER (CS)', 30).setTintFill(0x000000) //0xe31837
+        this.twoPlayerModeText = this.add.bitmapText(10, 150, 'pixelKey', '-PRESS TWO: FOR TWO PLAYER', 30).setTintFill(0xe31837) //0xe31837
         this.backToMenuText = this.add.bitmapText(10, 230, 'pixelKey', '-PRESS SPACE: TO MENU', 30).setTintFill(0xfdbb30)
 
         this.add.image('player','assets/img/Player.png')
@@ -48,13 +48,13 @@ class NumPlayers extends Phaser.Scene {
             this.scene.start('selectPosScene')
             //this.scene.start('playScene')
         }
-        /*
-        //NOTE: SEND IT TO A DIFFERENT SCENE
+        
+        //Two player mode. Immedietly go to the play scene
         if (Phaser.Input.Keyboard.JustDown(this.twoKey)) {
             this.sound.play('kickerScoreSound')
-            this.scene.start('playScene')
+            this.scene.start('playTwoPlayer')
         }
-        */
+        
         if (Phaser.Input.Keyboard.JustDown(this.spacebarKey)) {
             this.scene.start('menuScene')
         }
