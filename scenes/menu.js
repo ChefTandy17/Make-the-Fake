@@ -45,7 +45,7 @@ class Menu extends Phaser.Scene {
 
         this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
         this.leftkey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT)
-        //this.rightkey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT)
+        this.rightkey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT)
     }
 
     update() {
@@ -61,10 +61,8 @@ class Menu extends Phaser.Scene {
             this.backgroundMusic.pause()
             this.scene.start('tutorialScene')
         }
-
-        //there isn't much... yet
-        //if (Phaser.Input.Keyboard.JustDown(this.rightkey)) {
-        //    this.scene.start('creditsScene')
-        //}
+        if (Phaser.Input.Keyboard.JustDown(this.rightkey)) {
+            this.scene.start('creditsScene')
+        }
     }
 }

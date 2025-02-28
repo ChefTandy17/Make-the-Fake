@@ -1,11 +1,6 @@
 //Tyvin Tandy
 //Pro Football 1861
 
-//Credits:
-//Press Start P2 font was created by CodeMan38
-//kick greg by djszigen
-//
-
 // you need this 
 'use strict'
 
