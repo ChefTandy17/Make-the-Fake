@@ -154,12 +154,28 @@ startGameScene(){
 velocityScene(qbVelocity){
     this.football.setVelocity(qbVelocity, 0)
 
-    this.kicker.play('kick')
-    this.kicker.setSize(5, 5)
-    this.kicker.setOffset(25, 14)
+    this.time.addEvent({
+        delay: 500,
+        callback: () => {
+            this.kicker.play('kick')
+            this.kicker.setSize(5, 5)
+            this.kicker.setOffset(25, 14)
+            },
+        callbackScope: this
+    })
 
+    //to set the kicker position to idle
+    this.time.addEvent({
+        delay: 1500,
+        callback: () => {
+            this.kicker.play('kickerIdle')
+            this.kicker.body.setSize(5, 5)
+            this.kicker.setOffset(10,50)
+            },
+        callbackScope: this
+    })
 
-
+    this.gameSceneFlag = false
 }
 
 resetFootball(player, pixelTextFont) {
