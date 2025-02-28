@@ -58,7 +58,7 @@ class DifficultyKicker extends Phaser.Scene {
         //expert mode
         if (Phaser.Input.Keyboard.JustDown(this.threeKey)) {
             game.settingsKicker = {
-                kickerReaction: Phaser.Math.Between(100, 600),
+                kickerReaction: Phaser.Math.Between(100, 750),
                 //kickerResetPos: (Phaser.Math.Between(1000, 1200)),
                 kickerIdlePos: 1500
             }
