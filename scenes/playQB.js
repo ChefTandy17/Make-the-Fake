@@ -103,10 +103,24 @@ class PlayQB extends Phaser.Scene {
         })
 }
 
+velocityScene(qbVelocity){
+    this.football.setVelocity(qbVelocity, 0)
+    this.time.addEvent({
+        delay: 1000,
+        callback: () => {
+            this.football.setVelocity(0, -100)
+        },
+        callbackScope: this
+    })
+
+
+}
+
 resetFootball(player, pixelTextFont) {
     this.football.body.updateFromGameObject()
     this.football.setPosition(770, 150)
     this.football.setVelocity(0, 0)
+    this.qbVelocity = -500
 
     if (player == 'kicker') {
         this.sound.play('kickerScoreSound')
@@ -175,11 +189,9 @@ game.settingsKicker = {
 
 update() {
 
-    if(!this.gameOver){
-        
-        //this.qbVelocity = -500
-        //this.gameSceneFlag = false   
-
+    this.football.setVelocity(0, 0)
+    
+    if(!this.gameOver){ 
         if(Phaser.Input.Keyboard.JustDown(this.upKey)){
             this.qbVelocity -= 50
         }
@@ -187,7 +199,7 @@ update() {
         if(Phaser.Input.Keyboard.JustDown(this.downKey)){
             //to ensure the player doesn't hit a very low velocity
             if(this.qbVelocity <= -100){
-                this.qbVelocity == -100
+                this.qbVelocity = -100
             }
             else{
                 this.qbVelocity += 25
@@ -204,13 +216,13 @@ update() {
         }
 
         if(this.gameSceneFlag == true){
-
-            this.football.setVelocity(this.qbVelocity, 0)
+            this.velocityScene(this.qbVelocity)
 
             //the kicker gets 100 points everytime the football is out of bounds
             if (this.football.y < 0 || this.football.y > this.sys.game.config.height) {
                 this.gameSceneFlag = false
                 this.resetFootball("kicker", 'pixelKey')
+                this.football.setVelocity(0, 0)
                 this.qb.play('qbIdle')
             }
 
@@ -218,6 +230,7 @@ update() {
             if (this.football.x < 0 || this.football.x > this.sys.game.config.width) {
                 this.gameSceneFlag = false
                 this.resetFootball("qb",'pixelKey')
+                this.football.setVelocity(0, 0)
                 this.qb.play('qbIdle')
 
             }
