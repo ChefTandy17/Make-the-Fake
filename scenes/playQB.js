@@ -137,8 +137,8 @@ increaseVelocity(){
 }
 
 decreaseVelocity(){
-    if(this.qbVelocity <= -500){
-        this.qbVelocity = -500
+    if(this.qbVelocity <= -300){
+        this.qbVelocity = -300
     }
     else{
         this.qbVelocity += 25
