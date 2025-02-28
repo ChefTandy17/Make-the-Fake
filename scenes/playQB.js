@@ -4,27 +4,18 @@ class PlayQB extends Phaser.Scene {
     }
 
     init(){
-
-    }
-
-    preload(){
-
+        this.qbVelocity = -500
+        this.gameSceneFlag = false
     }
 
     create() {
 
-    this.qbVelocity = -200
-    this.gameSceneFlag = false
+        
 
     //to create the background for the game
     this.scoringRect = this.add.rectangle(500, 480, 1000, 100, 0x000000) // x, y, width, height, color
     this.purpleRect = this.add.rectangle(500, 330, 1000, 100, 0xdf57f6)
     this.yellowRect = this.add.rectangle(500, 0, 1000, 250, 0xf4f976)
-
-    //BUG: Causing too much lag in the game
-    //to make the kicker kick the ball sprite, (when the football collides with the invis barrier)
-    //    this.triggerKickBarrier = this.physics.add.sprite(300, 1).setOrigin(0).setSize(1, 1000).setVisible(false)
-    //    this.triggerKickBarrier.body.setImmovable(true)
 
     this.kickerScore = 0
     this.qbScore = 0
@@ -36,9 +27,13 @@ class PlayQB extends Phaser.Scene {
     this.upKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP)
     this.downKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN)
 
+    this.enterKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER)
+
     //maybe to be used to increase or decrease the time
-    this.leftKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT)
-    this.rightKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT)
+    //this.leftKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT)
+    //this.rightKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT)
+
+
 
     this.kicker = this.physics.add.sprite(200,240, 'kicker')
     this.kicker.setScale(6)
@@ -109,17 +104,9 @@ class PlayQB extends Phaser.Scene {
 }
 
 resetFootball(player, pixelTextFont) {
-    this.gameSceneFlag = false
     this.football.body.updateFromGameObject()
-    this.football.body.stop()
-    this.football.setVelocity(0, 0)
     this.football.setPosition(770, 150)
-
-    this.qbVelocity = -200
-    this.qbAutoThrowTimer = 15
-    this.upKey.enabled = true
-    this.downKey.enabled = true
-    this.leftKey.enabled = true
+    this.football.setVelocity(0, 0)
 
     if (player == 'kicker') {
         this.sound.play('kickerScoreSound')
@@ -133,7 +120,12 @@ resetFootball(player, pixelTextFont) {
     }
 
     this.victoryScreen(this.kickerScore, this.qbScore, player, pixelTextFont)
+
+    this.upKey.enabled = true
+    this.downKey.enabled = true
+    this.enterKey.enabled = true
 }
+
 
 //display victory screen for the kicker or the qb
 victoryScreen(checkKickerScore, checkQBScore, player, pixelTextFont){
@@ -184,112 +176,36 @@ game.settingsKicker = {
 update() {
 
     if(!this.gameOver){
- 
-        if (this.qbAutoThrowTimer == undefined) {
-            this.qbAutoThrowTimer = 5
-        }
         
-        if (this.qbAutoThrowTimer > 0) {
-            this.qbAutoThrowTimer -= this.game.loop.delta / 1000
-            //console.log(`Timer: ${this.qbAutoThrowTimer}`)
-        }
+        //this.qbVelocity = -500
+        //this.gameSceneFlag = false   
 
         if(Phaser.Input.Keyboard.JustDown(this.upKey)){
-            this.qbVelocity -= 20
+            this.qbVelocity -= 50
         }
 
         if(Phaser.Input.Keyboard.JustDown(this.downKey)){
-            //to ensure the player doesn't hit positive velocity
-            if(this.qbVelocity <= 0){
-                this.qbVelocity += 1
+            //to ensure the player doesn't hit a very low velocity
+            if(this.qbVelocity <= -100){
+                this.qbVelocity == -100
             }
             else{
-                this.qbVelocity += 5
+                this.qbVelocity += 25
             }
-        }
+        }     
 
-
-        if(this.qbAutoThrowTimer < 0){ 
-        //to disable the keys
+        if(Phaser.Input.Keyboard.JustDown(this.enterKey)){ 
+            //to disable the keys
             this.upKey.enabled = false
             this.downKey.enabled = false
+            this.enterKey.enabled = false
 
-            this.leftKey.enabled = false
             this.gameSceneFlag = true
         }
 
         if(this.gameSceneFlag == true){
-            //throw the football in the custom user velocity
+
             this.football.setVelocity(this.qbVelocity, 0)
-
-            //kick animation
-            this.time.addEvent({
-                delay: game.settingsKicker.kickerReaction,
-                callback: () => {
-                    this.kicker.play('kick')
-                    this.kicker.setSize(5, 5)
-                    this.kicker.setOffset(25, 14)
-                    },
-                callbackScope: this
-            })                            
-            //to remove the collision hitbox at a certain point in time
-            this.time.addEvent({
-                delay: game.settingsKicker.kickerResetPos,
-                callback: () => {
-                    this.kicker.play('kick')
-                    this.kicker.body.setSize(5, 5)
-                    this.kicker.setOffset(10,50)
-                    },
-                callbackScope: this
-                })
-                    
-            //to set the kicker position to idle
-            this.time.addEvent({
-                delay: game.settingsKicker.kickerIdlePos,
-                    callback: () => {
-                        this.kicker.play('kickerIdle')
-                        this.kicker.body.setSize(5, 5)
-                        this.kicker.setOffset(10,50)
-                        },
-                    callbackScope: this
-                    })
-
-                this.physics.add.collider(this.kicker, this.football, (kicker, football) => {
-                       
-                    // Kick the football up
-                    this.qbAutoThrowTimer = 2
-                    this.football.body.stop()
-                    this.football.setVelocity(0, 0)
-                    this.qbVelocity = 0
-                    this.football.setVelocityY(-500)
-                    
-                    if (!this.kickSoundFlag) {
-                        this.sound.play('kickSound')
-                
-                        // Kick particle effect
-                        const kickParticle = this.add.particles(this.football.x, this.football.y, 'kickParticle', {
-                            lifespan: 1000,
-                            speed: { min: 150, max: 250 },
-                            scale: { start: 1, end: 0 },
-                            gravityY: 500,
-                            blendMode: 'ADD',
-                            emitting: false
-                        });
-                
-                        kickParticle.explode(10)
-                    }
-                
-                    this.kickSoundFlag = true;
-                    
-                    this.time.addEvent({
-                        delay: 100,
-                        callback: () => {
-                            this.kickSoundFlag = false;
-                        },
-                        callbackScope: this
-                    })
-                })
-
 
             //the kicker gets 100 points everytime the football is out of bounds
             if (this.football.y < 0 || this.football.y > this.sys.game.config.height) {
