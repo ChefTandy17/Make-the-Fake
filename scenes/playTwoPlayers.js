@@ -27,6 +27,13 @@ class PlayTwoPlayer extends Phaser.Scene {
     //for the kicker to kick the ball
     this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
 
+    //for the qb to control the ball and to throw the ball
+    this.upKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP)
+    this.downKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN)
+
+    this.enterKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER)
+
+
     this.kicker = this.physics.add.sprite(200,240, 'kicker')
     this.kicker.setScale(6)
     this.kicker.setDepth(1)
@@ -154,6 +161,7 @@ victoryScreen(checkKickerScore, checkQBScore, player, pixelTextFont){
         this.sound.play('victorySound1')
         this.gameOver = true
     }
+
     else if(player = 'qb' && checkQBScore >= 1000){
         //this.add.bitmaptext(centerX / 2, centerY / 2, "QUARTERBACK VICTORY", pixelTextFont).setOrigin(0.5)
         let qbVictoryBlue = this.add.bitmapText(centerX, centerY, pixelTextFont, "QUARTERBACK VICTORY", 34.5).setTintFill(0x1D428A).setOrigin(0.5)

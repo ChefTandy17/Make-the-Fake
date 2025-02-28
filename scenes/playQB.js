@@ -23,17 +23,11 @@ class PlayQB extends Phaser.Scene {
     this.kickerScoreText = this.add.bitmapText(50, 450, 'pixelKey', 'P1:000', 40).setTintFill(0xffffff)
     this.qbScoreText = this.add.bitmapText(550, 450, 'pixelKey', 'P2:000', 40).setTintFill(0xffffff)
 
-    //for the qb to throw the football, pressing up creates +100 velocity while -50 to slow velocity
+    //for the qb to throw the football and adjusting its velocity
     this.upKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP)
     this.downKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN)
 
     this.enterKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER)
-
-    //maybe to be used to increase or decrease the time
-    //this.leftKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT)
-    //this.rightKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT)
-
-
 
     this.kicker = this.physics.add.sprite(200,240, 'kicker')
     this.kicker.setScale(6)
@@ -126,7 +120,7 @@ class PlayQB extends Phaser.Scene {
             this.football.setVelocity(0, -500)
         })
 
-        this.physics.world.drawDebug = false;
+        this.physics.world.drawDebug = false
         this.physics.world.debugGraphic = this.add.graphics()
     
         // to set debug mode on or off
@@ -169,6 +163,11 @@ startGameScene(){
 }
 
 velocityScene(qbVelocity){
+
+    //to set the animation for the qb, and to play the throw noise
+    this.sound.play('qbThrow')
+    this.qb.play('throw')
+
     this.football.setVelocity(qbVelocity, 0)
 
     this.time.addEvent({
@@ -204,6 +203,10 @@ velocityScene(qbVelocity){
 
 resetFootball(player, pixelTextFont) {
 
+    //to reset the qb animation to idle
+    this.qb.play('qbIdle')
+
+    //to reset the football, and its velocity
     this.football.body.updateFromGameObject()
     this.football.setPosition(770, 150)
     this.football.setVelocity(0, 0)
@@ -266,13 +269,6 @@ victoryScreen(checkKickerScore, checkQBScore, player, pixelTextFont){
     }
 
 }
-/*
-game.settingsKicker = {
-    kickerReaction: (Phaser.Math.Between(8000, 10000)),
-    kickerResetPos: (Phaser.Math.Between(1000, 1200)),
-    kickerIdlePos:  (Phaser.Math.Between(1200, 1400))
-}
-*/
 
 update() {    
     if(!this.gameOver){ 

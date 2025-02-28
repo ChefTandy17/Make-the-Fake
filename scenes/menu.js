@@ -57,7 +57,7 @@ class Menu extends Phaser.Scene {
             this.physics.world.debugGraphic.clear()
         }
     }, this)
-    }
+}
 
     update() {
 
@@ -73,6 +73,8 @@ class Menu extends Phaser.Scene {
             this.scene.start('tutorialScene')
         }
         if (Phaser.Input.Keyboard.JustDown(this.rightkey)) {
+            this.sound.play('kickerScoreSound')
+            this.backgroundMusic.pause()
             this.scene.start('creditsScene')
         }
     }
