@@ -2,18 +2,6 @@ class PlayKicker extends Phaser.Scene {
     constructor() {
         super('playKickerScene')
     }
-
-    init(){
-
-    }
-
-    preload(){
-
-    }
-
-//width: 1000, x
-//height: 500, y
-
     create() {
 
     //to create the background for the game
@@ -21,18 +9,18 @@ class PlayKicker extends Phaser.Scene {
     this.purpleRect = this.add.rectangle(500, 330, 1000, 100, 0xdf57f6)
     this.yellowRect = this.add.rectangle(500, 0, 1000, 250, 0xf4f976)
 
-    //to create an invisible barrier in the middle
-    let invisibleBarrierMiddle = this.physics.add.sprite(500, 1).setOrigin(0).setSize(1, 1000).setVisible(false)
-
+    //to create a scoring system
     this.kickerScore = 0
     this.qbScore = 0
 
+    //scoring system text
     this.kickerScoreText = this.add.bitmapText(50, 450, 'pixelKey', 'P1:000', 40).setTintFill(0xffffff)
     this.qbScoreText = this.add.bitmapText(550, 450, 'pixelKey', 'P2:000', 40).setTintFill(0xffffff)
 
-    //for the kicker to kick the ball
+    //spacebar input, which gives the player the ability to kick a ball
     this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
 
+    //displaying the kicker
     this.kicker = this.physics.add.sprite(200,240, 'kicker')
     this.kicker.setScale(6)
     this.kicker.setDepth(1)
@@ -41,7 +29,7 @@ class PlayKicker extends Phaser.Scene {
     this.kicker.body.setCollideWorldBounds(true)
     this.kicker.body.setImmovable(true) 
 
-
+    //displaying the quarterback
     this.qb = this.physics.add.sprite(800,240, 'qb')
     this.qb.setScale(6)
     this.qb.body.setSize(5, 5)
@@ -50,72 +38,72 @@ class PlayKicker extends Phaser.Scene {
     this.qb.body.setCollideWorldBounds(true)
     this.qb.body.setImmovable(true) 
 
+    //displaying the football
     this.football = this.physics.add.sprite(770,150,'football')
     this.football.setScale(6)
 
-    //game over flag
+    //game over flag to end the game
     this.gameOver = false
     
-        //create a kick animations for the kicker
-        this.anims.create({
-            key: 'kickerIdle',
-            frames: this.anims.generateFrameNumbers('kicker', { 
-                start: 0, 
-                end: 0 
-            }),
-            frameRate: 1,
-            repeat: 0
-        })
+    //create an idle animations for the kicker
+    this.anims.create({
+        key: 'kickerIdle',
+        frames: this.anims.generateFrameNumbers('kicker', { 
+            start: 0, 
+            end: 0 
+        }),
+        frameRate: 1,
+        repeat: 0
+    })
 
-        //create a kick animations for the kicker
-        this.anims.create({
-            key: 'kick',
-            frames: this.anims.generateFrameNumbers('kicker', { 
-                start: 1, 
-                end: 1 
-            }),
-            frameRate: 1,
-            repeat: 0
-        })
+    //create a kick animations for the kicker
+    this.anims.create({
+        key: 'kick',
+        frames: this.anims.generateFrameNumbers('kicker', { 
+            start: 1, 
+            end: 1 
+        }),
+        frameRate: 1,
+        repeat: 0
+    })
 
-        //create a throwing animations for the quarterback    
-        this.anims.create({
-            key: 'qbIdle',
-            frames: this.anims.generateFrameNumbers('qb', { 
-                start: 0, 
-                end: 0 
-            }),
-            frameRate: 1,
-            repeat: 0
-        })
+    //create an idle animations for the quarterback    
+    this.anims.create({
+        key: 'qbIdle',
+        frames: this.anims.generateFrameNumbers('qb', { 
+            start: 0, 
+            end: 0 
+        }),
+        frameRate: 1,
+        repeat: 0
+    })
 
-        //create a throwing animations for the quarterback    
-        this.anims.create({
-            key: 'throw',
-            frames: this.anims.generateFrameNumbers('qb', { 
-                start: 1, 
-                end: 1 
-            }),
-            frameRate: 1,
-            repeat: 0
-        })
+    //create a throwing animations for the quarterback    
+    this.anims.create({
+        key: 'throw',
+        frames: this.anims.generateFrameNumbers('qb', { 
+            start: 1, 
+            end: 1 
+        }),
+        frameRate: 1,
+        repeat: 0
+    })
 
-        this.physics.world.drawDebug = false;
-        this.physics.world.debugGraphic = this.add.graphics()
-    
-        // to set debug mode on or off
-        this.input.keyboard.on('keydown-D', function() {
-            this.physics.world.drawDebug = !this.physics.world.drawDebug
-            if (!this.physics.world.drawDebug) {
-                this.physics.world.debugGraphic.clear()
-            }
-        }, this)
+    //debugging mode
+    this.physics.world.drawDebug = false;
+    this.physics.world.debugGraphic = this.add.graphics()
+    this.input.keyboard.on('keydown-D', function() {
+        this.physics.world.drawDebug = !this.physics.world.drawDebug
+        if (!this.physics.world.drawDebug) {
+            this.physics.world.debugGraphic.clear()
+        }
+    }, this)
 
-        //to set up the first throw of the game (probably theres a better way, buts thats all I can come up with)
-        this.firstQBThrow()
+    //to set up the first throw of the game
+    this.firstQBThrow()
 }
   
-//for the CPU to perform a throw. this is called only once to set up the game
+//for the quarterback to throw the first football to the kicker. This is called once to set up the game
 firstQBThrow(){
         this.time.addEvent({
             delay: Phaser.Math.Between(1000, 5000),
@@ -123,19 +111,20 @@ firstQBThrow(){
                 this.sound.play('qbThrow')
                 this.qb.play('throw')
                 this.football.setVelocity(game.settingsQB.footballVelocity, 0)
-                //this.football.setVelocity((Phaser.Math.Between(-300, -800)), 0)
                 },
             callbackScope: this,
-            loop: false,               //to perform this only once
+            loop: false,
         })
 }
 
-//when the football is out of bounds, figure out who to give the score to, reset velocity and position, and delay the next throw.
+//when the football is out of bounds, figure out who to give the score to, reset velocity and position of the football, and throw the football again 
 resetFootball(player, pixelTextFont) {
+    //resets the football position
     this.football.body.updateFromGameObject()
     this.football.setPosition(770, 150)
     this.football.setVelocity(0, 0)
 
+    //check who to give the +100 points to.
     if (player == 'kicker') {
         this.sound.play('kickerScoreSound')
         this.kickerScore += 100
@@ -147,16 +136,17 @@ resetFootball(player, pixelTextFont) {
         this.qbScoreText.setText("P2:" + this.qbScore)
     }
 
+    //this function is called to check if the victory condition is met
+    //if its true, it sets the gameOver flag to true.
     this.victoryScreen(this.kickerScore, this.qbScore, player, pixelTextFont)
 
+    //if the gameOver flag continues to be false, have the quarterback to throw the football again. 
     if(!this.gameOver){
-        //similar function as the firstQBThrow
         this.time.addEvent({
             delay: Phaser.Math.Between(2000, 6000),
             callback: () => {
                 this.sound.play('qbThrow')
                 this.qb.play('throw')
-                //this.football.setVelocity(-300,0) 
                 this.football.setVelocity(game.settingsQB.footballVelocity, 0)
             },
             callbackScope: this
@@ -168,7 +158,6 @@ resetFootball(player, pixelTextFont) {
 victoryScreen(checkKickerScore, checkQBScore, player, pixelTextFont){
 
     if(player == "kicker" && checkKickerScore >= 1000){
-        //this.add.bitmaptext(centerX / 2, centerY / 2, "KICKER VICTORY", pixelTextFont).setOrigin(0.5)
         let kickerVictoryYellow = this.add.bitmapText(centerX, centerY, pixelTextFont, "KICKER VICTORY", 39.5).setTintFill(0xfDc72c).setOrigin(0.5)
         let kickerVictoryBlue = this.add.bitmapText(centerX, centerY, pixelTextFont, "KICKER VICTORY", 40).setTintFill(0x1D428A).setOrigin(0.5)
         kickerVictoryYellow.setDepth(1)
@@ -178,7 +167,6 @@ victoryScreen(checkKickerScore, checkQBScore, player, pixelTextFont){
         this.gameOver = true
     }
     else if(player = 'qb' && checkQBScore >= 1000){
-        //this.add.bitmaptext(centerX / 2, centerY / 2, "QUARTERBACK VICTORY", pixelTextFont).setOrigin(0.5)
         let qbVictoryBlue = this.add.bitmapText(centerX, centerY, pixelTextFont, "QUARTERBACK VICTORY", 34.5).setTintFill(0x1D428A).setOrigin(0.5)
         let qbVictoryYellow = this.add.bitmapText(centerX, centerY, pixelTextFont, "QUARTERBACK VICTORY", 35).setTintFill(0xfDc72c).setOrigin(0.5)
         qbVictoryBlue.setDepth(1)
@@ -188,14 +176,12 @@ victoryScreen(checkKickerScore, checkQBScore, player, pixelTextFont){
         this.gameOver = true
     }
 
-    //NOTE: if main menu scene exist, sent it to main menu scene
+    //send the player back to the main menu screen after seven seconds.
     if(this.gameOver){
-        //to restart the play scene
         this.time.addEvent({
             delay: 7000,
             callback: () => {
-                this.scene.start('menuScene');
-                //this.scene.restart()
+                this.scene.start('menuScene')
             },
             callbackScope: this
         })
@@ -207,15 +193,13 @@ update() {
 
     if(!this.gameOver){
 
-        //to decrease the timer to prevent players to spam space
+        //sets up a timer for the kicker to prevent players to spam the kick button
         if (this.kickerAbilityTimer == undefined) {
             this.kickerAbilityTimer = 2
         }
-
         if (this.kickerAbilityTimer > 0) {
             this.kickerAbilityTimer -= this.game.loop.delta / 1000
         }
-
         if (this.kickerAbilityTimer <= 0){
             if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
 
@@ -238,7 +222,7 @@ update() {
                     callbackScope: this
                 })
                 
-                //to set the kicker position to idle
+                //to set the kicker position back to idle after kicking the ball
                 this.time.addEvent({
                     delay: 1500,
                     callback: () => {
@@ -251,7 +235,7 @@ update() {
             }
         }
 
-
+        //collision check to move the football up to indicate a successful kick, along with displaying a particle and play the kick sound
         this.physics.add.collider(this.kicker, this.football, (kicker, football) => {
             if(!this.kickSoundFlag){
                 this.sound.play('kickSound')
@@ -279,13 +263,13 @@ update() {
         //the kicker gets 100 points everytime the football is out of bounds
         if (this.football.y < 0 || this.football.y > this.sys.game.config.height) {
             this.resetFootball("kicker", 'pixelKey')
-            this.qb.play('qbIdle')
+            this.qb.play('qbIdle')                              //to reset the quarterback position to idle
         }
 
         //the qb gets 100 points everytime the football is out of bounds
         if (this.football.x < 0 || this.football.x > this.sys.game.config.width) {
             this.resetFootball("qb",'pixelKey')
-            this.qb.play('qbIdle')
+            this.qb.play('qbIdle')                               //to reset the quarterback position to idle
         }
     }
 }

@@ -8,8 +8,8 @@ class SelectPos extends Phaser.Scene {
         this.titleScreenRed = this.add.bitmapText(centerX, centerY / 6, 'pixelKey', 'PRO FOOTBALL 1861', 50).setTintFill(0xe31837).setOrigin(0.5)
         this.titleScreenBlue = this.add.bitmapText(centerX, centerY / 6, 'pixelKey', 'PRO FOOTBALL 1861', 50.50).setTintFill(0x002b5c).setOrigin(0.5)
 
-        this.easyModeText = this.add.bitmapText(10,  100, 'pixelKey', '-PRESS ONE: TO BE KICKER', 30).setTintFill(0x002b5c)
-        this.mediumModeText = this.add.bitmapText(10, 150, 'pixelKey', '-PRESS TWO: TO BE QUARTERBACK', 30).setTintFill(0xe31837) 
+        this.kickerText = this.add.bitmapText(10,  100, 'pixelKey', '-PRESS ONE: TO BE KICKER', 30).setTintFill(0x002b5c)
+        this.qbText = this.add.bitmapText(10, 150, 'pixelKey', '-PRESS TWO: TO BE QUARTERBACK', 30).setTintFill(0xe31837) 
 
         this.spacebarKey = this.add.bitmapText(10, 230, 'pixelKey', '-PRESS SPACE: TO PLAYER SELECTION', 27).setTintFill(0xfdbb30)
     }
@@ -22,6 +22,7 @@ class SelectPos extends Phaser.Scene {
 
         this.spacebarKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
 
+        //displays the football player
         this.playerModelLeft = this.physics.add.sprite(centerX + 350, centerY + 230, 'player')
         this.playerModelLeft.setFlipX(true)
         this.playerModelLeft.setScale(8)
@@ -43,6 +44,7 @@ class SelectPos extends Phaser.Scene {
             this.sound.play('kickerScoreSound')
             this.scene.start('kickerDifficultyScene')
         }
+        //go back to select the number of players
         if (Phaser.Input.Keyboard.JustDown(this.spacebarKey)) {
             this.scene.start('numPlayersScene')
         }

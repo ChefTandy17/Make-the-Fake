@@ -5,26 +5,26 @@ class Menu extends Phaser.Scene {
 
     preload() {
 
-        this.titleScreenWhite = this.add.bitmapText(centerX, centerY / 2, 'pixelKey', 'PRO FOOTBALL 1861', 49.50).setTintFill(0xc4ced4).setOrigin(0.5)
-        this.titleScreenRed = this.add.bitmapText(centerX, centerY / 2, 'pixelKey', 'PRO FOOTBALL 1861', 50).setTintFill(0xe31837).setOrigin(0.5)
-        this.titleScreenBlue = this.add.bitmapText(centerX, centerY / 2, 'pixelKey', 'PRO FOOTBALL 1861', 50.50).setTintFill(0x002b5c).setOrigin(0.5)
-        this.directionRules = this.add.bitmapText(centerX, centerY / 2 + 230, 'pixelKey', 'PRESS LEFT ARROW KEY FOR RULES', 30).setTintFill(0x002b5c).setOrigin(0.5)
-        this.directionCredits = this.add.bitmapText(centerX, centerY / 2 + 260, 'pixelKey', 'PRESS RIGHT ARROW KEY FOR CREDITS', 29).setTintFill(0xe31837).setOrigin(0.5)
-        this.play = this.add.bitmapText(centerX, centerY / 2 + 320, 'pixelKey', 'PRESS SPACE TO PLAY', 40).setTintFill(0xfdbb30).setOrigin(0.5);
+            this.titleScreenWhite = this.add.bitmapText(centerX, centerY / 2, 'pixelKey', 'PRO FOOTBALL 1861', 49.50).setTintFill(0xc4ced4).setOrigin(0.5)
+            this.titleScreenRed = this.add.bitmapText(centerX, centerY / 2, 'pixelKey', 'PRO FOOTBALL 1861', 50).setTintFill(0xe31837).setOrigin(0.5)
+            this.titleScreenBlue = this.add.bitmapText(centerX, centerY / 2, 'pixelKey', 'PRO FOOTBALL 1861', 50.50).setTintFill(0x002b5c).setOrigin(0.5)
+            this.directionRules = this.add.bitmapText(centerX, centerY / 2 + 230, 'pixelKey', 'PRESS LEFT ARROW KEY FOR RULES', 30).setTintFill(0x002b5c).setOrigin(0.5)
+            this.directionCredits = this.add.bitmapText(centerX, centerY / 2 + 260, 'pixelKey', 'PRESS RIGHT ARROW KEY FOR CREDITS', 29).setTintFill(0xe31837).setOrigin(0.5)
+            this.play = this.add.bitmapText(centerX, centerY / 2 + 320, 'pixelKey', 'PRESS SPACE TO PLAY', 40).setTintFill(0xfdbb30).setOrigin(0.5);
 
-        this.backgroundMusic = this.sound.add('backgroundMusic',{
-            volume: 0.5,
-            loop: true,
-        })
-        this.backgroundMusic.play()
+            this.backgroundMusic = this.sound.add('backgroundMusic',{
+                volume: 0.5,
+                loop: true,
+            })
+            this.backgroundMusic.play()
 
-        this.load.image('footballMenu','assets/img/football.png')
-
-        this.load.spritesheet('footballSpritesheet', 'assets/img/footballMain.png', {
-            frameWidth: 16,
-            frameHeight: 8,
-        })
-    }
+            //to load an image of a football
+            this.load.image('footballMenu','assets/img/football.png')
+            this.load.spritesheet('footballSpritesheet', 'assets/img/footballMain.png', {
+                frameWidth: 16,
+                frameHeight: 8,
+            })
+        }
 
     create() {
 
@@ -36,8 +36,9 @@ class Menu extends Phaser.Scene {
             }),
             frameRate: 10,
             repeat: -1
-        });
+        })
 
+        //to display the animated spinning football
         this.footballMainMenu = this.physics.add.sprite(centerX, centerY, 'footballSpritesheet');
         this.footballMainMenu.setScale(12);
         this.footballMainMenu.setDepth(0);
@@ -46,32 +47,34 @@ class Menu extends Phaser.Scene {
         this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
         this.leftkey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT)
         this.rightkey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT)
-        
-    this.physics.world.drawDebug = false;
-    this.physics.world.debugGraphic = this.add.graphics()
+            
+        this.physics.world.drawDebug = false;
+        this.physics.world.debugGraphic = this.add.graphics()
 
-    // to set debug mode on or off
-    this.input.keyboard.on('keydown-D', function() {
-        this.physics.world.drawDebug = !this.physics.world.drawDebug
-        if (!this.physics.world.drawDebug) {
-            this.physics.world.debugGraphic.clear()
-        }
-    }, this)
-}
+        // to set debug mode on or off
+        this.input.keyboard.on('keydown-D', function() {
+            this.physics.world.drawDebug = !this.physics.world.drawDebug
+            if (!this.physics.world.drawDebug) {
+                this.physics.world.debugGraphic.clear()
+            }
+        }, this)
+    }
 
     update() {
 
+        //takes player to select number of players scene
         if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
             this.sound.play('kickerScoreSound')
             this.backgroundMusic.pause()
-            //this.scene.start('playScene')
             this.scene.start('numPlayersScene')
         }
+        //takes player to tutorial scene
         if (Phaser.Input.Keyboard.JustDown(this.leftkey)) {
             this.sound.play('kickerScoreSound')
             this.backgroundMusic.pause()
             this.scene.start('tutorialScene')
         }
+        //takes player to the credit scene
         if (Phaser.Input.Keyboard.JustDown(this.rightkey)) {
             this.sound.play('kickerScoreSound')
             this.backgroundMusic.pause()

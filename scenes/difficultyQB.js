@@ -8,7 +8,6 @@ class DifficultyQB extends Phaser.Scene {
         this.titleScreenRed = this.add.bitmapText(centerX, centerY / 6, 'pixelKey', 'PRO FOOTBALL 1861', 50).setTintFill(0xe31837).setOrigin(0.5)
         this.titleScreenBlue = this.add.bitmapText(centerX, centerY / 6, 'pixelKey', 'PRO FOOTBALL 1861', 50.50).setTintFill(0x002b5c).setOrigin(0.5)
 
-        
         this.easyModeText = this.add.bitmapText(10,  100, 'pixelKey', '-PRESS ONE: BEGINNER MODE', 30).setTintFill(0x808080)
         this.mediumModeText = this.add.bitmapText(10, 150, 'pixelKey', '-PRESS TWO: INTERMEDIATE MODE', 30).setTintFill(0x002b5c)
         this.expertModeText = this.add.bitmapText(10, 200, 'pixelKey', '-PRESS THREE: EXPERT MODE', 30).setTintFill(0xe31837)
@@ -40,6 +39,7 @@ class DifficultyQB extends Phaser.Scene {
             this.sound.play('kickerScoreSound')
             this.scene.start('playKickerScene')
         }
+
         //intermediate mode
         if (Phaser.Input.Keyboard.JustDown(this.twoKey)) {
             game.settingsQB = {
@@ -49,6 +49,7 @@ class DifficultyQB extends Phaser.Scene {
             this.sound.play('kickerScoreSound')
             this.scene.start('playKickerScene')
         }
+        
         //expert mode
         if (Phaser.Input.Keyboard.JustDown(this.threeKey)) {
             game.settingsQB = {

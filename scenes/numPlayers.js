@@ -9,7 +9,7 @@ class NumPlayers extends Phaser.Scene {
         this.titleScreenBlue = this.add.bitmapText(centerX, centerY / 6, 'pixelKey', 'PRO FOOTBALL 1861', 50.50).setTintFill(0x002b5c).setOrigin(0.5)
 
         this.onePlayerModeText = this.add.bitmapText(10,  100, 'pixelKey', '-PRESS ONE: FOR SINGLE PLAYER', 30).setTintFill(0x002b5c)
-        this.twoPlayerModeText = this.add.bitmapText(10, 150, 'pixelKey', '-PRESS TWO: FOR TWO PLAYER', 30).setTintFill(0xe31837) //0xe31837
+        this.twoPlayerModeText = this.add.bitmapText(10, 150, 'pixelKey', '-PRESS TWO: FOR TWO PLAYER', 30).setTintFill(0xe31837)
         this.backToMenuText = this.add.bitmapText(10, 230, 'pixelKey', '-PRESS SPACE: TO MENU', 30).setTintFill(0xfdbb30)
 
         this.add.image('player','assets/img/Player.png')
@@ -25,7 +25,7 @@ class NumPlayers extends Phaser.Scene {
             }),
             frameRate: 10,
             repeat: -1
-        });
+        })
 
         this.footballSelectPlayers = this.physics.add.sprite(centerX, centerY + 100, 'footballSpritesheet');
         this.footballSelectPlayers.setScale(12);
@@ -40,13 +40,10 @@ class NumPlayers extends Phaser.Scene {
 
     update() {
 
-        //NOTE: SEND IT TO NUMPLAY -> POSITION -> DIFFICULTY -> RULES(Maybe) -> PLAY SCENE
-
-        //One player mode. Goes to position select screen
+        //If selected one player mode, go to position select screen
         if (Phaser.Input.Keyboard.JustDown(this.oneKey)) {
             this.sound.play('kickerScoreSound')
             this.scene.start('selectPosScene')
-            //this.scene.start('playScene')
         }
         
         //Two player mode. Immedietly go to the play scene
@@ -54,10 +51,9 @@ class NumPlayers extends Phaser.Scene {
             this.sound.play('kickerScoreSound')
             this.scene.start('playTwoPlayer')
         }
-        
+        //to go back to the menu scene
         if (Phaser.Input.Keyboard.JustDown(this.spacebarKey)) {
             this.scene.start('menuScene')
         }
-
     }
 }
