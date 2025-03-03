@@ -132,7 +132,7 @@ class PlayQB extends Phaser.Scene {
 
 //to increase the velocity of the football throw
 increaseVelocity(){
-    if(this.qbVelocity >= -2500){    //to prevent very fast throw speeds
+    if(this.qbVelocity <= -2500){    //to prevent very fast throw speeds
         this.qbVelocity = -2500
     }
     else{
