@@ -181,6 +181,7 @@ velocityScene(qbVelocity){
     this.football.setVelocity(qbVelocity, 0)
 }
 
+/*
 kickFootball(){
     if (this.kickerAbilityTimer == undefined) {
         this.kickerAbilityTimer = 2
@@ -225,6 +226,7 @@ kickFootball(){
         }
     } 
 }
+*/
 
 
 //reset the football
@@ -293,8 +295,8 @@ update() {
     if(!this.gameOver){ 
 
 
-        //control for the kicker
-       
+        
+    //control for the kicker   
     //to decrease the timer to prevent players to spam space
     if (this.kickerAbilityTimer == undefined) {
         this.kickerAbilityTimer = 2
@@ -340,22 +342,39 @@ update() {
     }
 
         //controls for the quarterback
-        if(Phaser.Input.Keyboard.JustDown(this.upKey)){
-            this.increaseVelocity()
+
+        //to prevent players to spam the enter button.
+        if (this.qbAbilityTimer == undefined) {
+            this.qbAbilityTimer = 3
+        }
+    
+        if (this.qbAbilityTimer > 0) {
+            this.qbAbilityTimer -= this.game.loop.delta / 1000
         }
 
-        if(Phaser.Input.Keyboard.JustDown(this.downKey)){
-            this.decreaseVelocity()
-        }     
+        if (this.qbAbilityTimer <= 0){
+            if(Phaser.Input.Keyboard.JustDown(this.upKey)){
+                this.increaseVelocity()
+            }
 
-        if(Phaser.Input.Keyboard.JustDown(this.enterKey)){ 
-            this.startGameScene()
-        }
+            if(Phaser.Input.Keyboard.JustDown(this.downKey)){
+                this.decreaseVelocity()
+            }     
 
+            if(Phaser.Input.Keyboard.JustDown(this.enterKey)){ 
+
+                //to reset the ability timer
+                this.qbAbilityTimer = 3
+
+                //start the throw scene
+                this.startGameScene()
+            }
+            }
         //the kicker gets 100 points everytime the football is out of bounds
         if (this.football.y < 0 || this.football.y > this.sys.game.config.height) {
             this.resetFootball("kicker", 'pixelKey')
             this.qb.play('qbIdle')
+        
             this.gameSceneFlag = false
         }
 
@@ -363,8 +382,9 @@ update() {
         if (this.football.x < 0 || this.football.x > this.sys.game.config.width) {
             this.resetFootball("qb",'pixelKey')
             this.qb.play('qbIdle')
+
             this.gameSceneFlag = false
-            }
         }
+    }
 }
 }
