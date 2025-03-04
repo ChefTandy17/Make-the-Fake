@@ -42,7 +42,6 @@ class Load extends Phaser.Scene {
         this.load.on('progress', (value) => {  
             loadingBar.clear()                                 
             loadingBar.fillStyle(0xD9FDDC, 1)                  
-            //loadingBar.fillRect(0, centerY, game.config.width * value, 5)
             loadingBar.fillRect(0, 0, game.config.width * value, 1000)
         });
         this.load.on('complete', () => {
@@ -53,7 +52,6 @@ class Load extends Phaser.Scene {
     create() {
 
         this.bmoColor = this.add.rectangle(centerX, centerY, 1000, 500, 0xD9FDDC).setOrigin(0.5)
-        //let eyes = this.add.graphics()
 
         // Create BMO's face from Adventure Time
         this.leftEye = this.add.ellipse(centerX - 200, centerY - 50, 30, 50, 0x000000)
@@ -73,7 +71,7 @@ class Load extends Phaser.Scene {
         this.time.addEvent({
             delay: 4400,
             callback: () => {
-                this.scene.start('menuScene') //its set to play scene for testing
+                this.scene.start('menuScene')
             },
             callbackScope: this
         })
