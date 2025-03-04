@@ -4,7 +4,7 @@ class PlayQB extends Phaser.Scene {
     }
 
     create() {
-        this.qbVelocity = -500                  //set up a default velocity
+        this.qbVelocity = -700                  //set up a default velocity
         this.gameSceneFlag = false              //flag for the gameplay scene
 
         //to create the background for the game
@@ -142,8 +142,8 @@ increaseVelocity(){
 
 //to decrease the velocity of the football throw
 decreaseVelocity(){
-    if(this.qbVelocity <= -300){    //to prevent very slow throw speeds
-        this.qbVelocity = -300
+    if(this.qbVelocity <= -500){    //to prevent very slow throw speeds
+        this.qbVelocity = -500
     }
     else{
         this.qbVelocity += 25
@@ -177,6 +177,17 @@ velocityScene(qbVelocity){
             this.kicker.play('kick')
             this.kicker.setSize(5, 5)
             this.kicker.setOffset(25, 14)
+            },
+        callbackScope: this
+    })
+
+    //to move the kick hitbox
+    this.time.addEvent({
+        delay: 600,
+        callback: () => {
+            this.kicker.play('kick')
+            this.kicker.body.setSize(5, 5)
+            this.kicker.setOffset(10,50)
             },
         callbackScope: this
     })
