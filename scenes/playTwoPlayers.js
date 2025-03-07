@@ -146,7 +146,7 @@ increaseVelocity(){
 
 //to decrease the velocity of the football
 decreaseVelocity(){
-    if(this.qbVelocity <= -300){    //to prevent very slow throws
+    if(this.qbVelocity >= -300){    //to prevent very slow throws
         this.qbVelocity = -300
     }
     else{
