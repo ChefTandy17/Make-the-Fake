@@ -10,7 +10,7 @@ class Menu extends Phaser.Scene {
             this.titleScreenBlue = this.add.bitmapText(centerX, centerY / 2, 'pixelKey', 'PRO FOOTBALL 1861', 50.50).setTintFill(0x002b5c).setOrigin(0.5)
             this.directionRules = this.add.bitmapText(centerX, centerY / 2 + 230, 'pixelKey', 'PRESS LEFT ARROW KEY FOR RULES', 30).setTintFill(0x002b5c).setOrigin(0.5)
             this.directionCredits = this.add.bitmapText(centerX, centerY / 2 + 260, 'pixelKey', 'PRESS RIGHT ARROW KEY FOR CREDITS', 29).setTintFill(0xe31837).setOrigin(0.5)
-            this.play = this.add.bitmapText(centerX, centerY / 2 + 320, 'pixelKey', 'PRESS SPACE TO PLAY', 40).setTintFill(0xfdbb30).setOrigin(0.5);
+            this.play = this.add.bitmapText(centerX, centerY / 2 + 320, 'pixelKey', 'PRESS [SPACE] TO PLAY', 40).setTintFill(0xfdbb30).setOrigin(0.5);
 
             this.backgroundMusic = this.sound.add('backgroundMusic',{
                 volume: 0.5,
