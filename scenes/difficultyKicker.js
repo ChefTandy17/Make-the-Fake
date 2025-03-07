@@ -33,7 +33,7 @@ class DifficultyKicker extends Phaser.Scene {
         //beginner mode
         if (Phaser.Input.Keyboard.JustDown(this.oneKey)) {
             game.settingsKicker = {
-                kickerReaction: (Phaser.Math.Between(700, 1000)),
+                difficulty: 'easy',
                 kickerIdlePos: 1000
             }
             this.sound.play('kickerScoreSound')
@@ -43,7 +43,7 @@ class DifficultyKicker extends Phaser.Scene {
         //intermediate mode
         if (Phaser.Input.Keyboard.JustDown(this.twoKey)) {
             game.settingsKicker = {
-                kickerReaction: (Phaser.Math.Between(500, 1000)),
+                difficulty: 'medium',
                 kickerIdlePos: 1000
             }
             this.sound.play('kickerScoreSound')
@@ -53,7 +53,7 @@ class DifficultyKicker extends Phaser.Scene {
         //expert mode
         if (Phaser.Input.Keyboard.JustDown(this.threeKey)) {
             game.settingsKicker = {
-                kickerReaction: (Phaser.Math.Between(200, 1000)),
+                difficulty: 'hard',
                 kickerIdlePos: 1000
             }
             this.sound.play('kickerScoreSound')

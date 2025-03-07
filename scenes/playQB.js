@@ -137,6 +137,25 @@ class PlayQB extends Phaser.Scene {
                 }
             }, this)
 
+        this.randomReaction()
+
+}
+
+//generate random values based  on the selected difficulty
+randomReaction(){
+    switch (game.settingsKicker.difficulty) {
+        case 'easy':
+            this.kickerReaction = Phaser.Math.Between(700, 1000)
+            break
+        case 'medium':
+            this.kickerReaction = Phaser.Math.Between(500, 1000)
+            break
+        case 'hard':
+            this.kickerReaction = Phaser.Math.Between(200, 1000)
+            break
+    }
+
+    console.log('Reaction Time:', this.kickerReaction)
 }
 
 //to increase the velocity of the football throw
@@ -178,10 +197,12 @@ velocityScene(qbVelocity){
     this.qb.play('throw')
 
     this.football.setVelocity(qbVelocity, 0)
+    
+    this.randomReaction()
 
     //to set the kicker position to kick
     this.time.addEvent({
-        delay: game.settingsKicker.kickerReaction,
+        delay: this.kickerReaction,
         callback: () => {
             this.kicker.play('kick')
             this.kicker.setSize(5, 5)

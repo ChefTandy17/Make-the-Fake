@@ -33,7 +33,7 @@ class DifficultyQB extends Phaser.Scene {
         //beginner mode
         if (Phaser.Input.Keyboard.JustDown(this.oneKey)) {
             game.settingsQB = {
-                footballVelocity: (Phaser.Math.Between(-300, -500)),
+                difficulty: 'easy',
                 footballKickedVelocity: -500,    
             }
             this.sound.play('kickerScoreSound')
@@ -43,7 +43,7 @@ class DifficultyQB extends Phaser.Scene {
         //intermediate mode
         if (Phaser.Input.Keyboard.JustDown(this.twoKey)) {
             game.settingsQB = {
-                footballVelocity: (Phaser.Math.Between(-500, -1500)),
+                difficulty: 'medium',
                 footballKickedVelocity: -900,    
             }
             this.sound.play('kickerScoreSound')
@@ -53,7 +53,7 @@ class DifficultyQB extends Phaser.Scene {
         //expert mode
         if (Phaser.Input.Keyboard.JustDown(this.threeKey)) {
             game.settingsQB = {
-                footballVelocity: (Phaser.Math.Between(-1500, -2500)),
+                difficulty: 'hard',
                 footballKickedVelocity: -1200,    
             }
             this.sound.play('kickerScoreSound')

@@ -105,18 +105,41 @@ class PlayKicker extends Phaser.Scene {
         }
     }, this)
 
+    this.randomFootballVelocity()
+    console.log('Football Velocity:', this.footballVelocity)
+
     //to set up the first throw of the game
     this.firstQBThrow()
 }
-  
+
+
+randomFootballVelocity(){
+    //generate random values based  on the selected difficulty
+    switch (game.settingsQB.difficulty) {
+        case 'easy':
+            this.footballVelocity = Phaser.Math.Between(-300, -500)
+            break
+        case 'medium':
+            this.footballVelocity = Phaser.Math.Between(-500, -1500)
+            break
+        case 'hard':
+            this.footballVelocity = Phaser.Math.Between(-1500, -2500)
+            break
+    }   
+}
+
+
+
 //for the quarterback to throw the first football to the kicker. This is called once to set up the game
 firstQBThrow(){
         this.time.addEvent({
             delay: Phaser.Math.Between(3000, 5000),
             callback: () => {
+                this.randomFootballVelocity()
                 this.sound.play('qbThrow')
                 this.qb.play('throw')
-                this.football.setVelocity(game.settingsQB.footballVelocity, 0)
+                this.football.setVelocity(this.footballVelocity, 0)
+                console.log('First Football Velocity:', this.footballVelocity)
                 },
             callbackScope: this,
             loop: false,
@@ -151,9 +174,11 @@ resetFootball(player, pixelTextFont) {
         this.time.addEvent({
             delay: Phaser.Math.Between(2000, 6000),
             callback: () => {
+                this.randomFootballVelocity()
                 this.sound.play('qbThrow')
                 this.qb.play('throw')
-                this.football.setVelocity(game.settingsQB.footballVelocity, 0)
+                this.football.setVelocity(this.footballVelocity, 0)
+                console.log('Football Velocity:', this.footballVelocity)
             },
             callbackScope: this
         })
