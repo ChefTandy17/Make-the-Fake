@@ -137,32 +137,29 @@ class PlayQB extends Phaser.Scene {
                 }
             }, this)
 
-        //this.randomReaction()
-
 }
 
-//generate random values based  on the selected difficulty
+//generate random kicker reaction values based  on the selected difficulty
 randomReaction(){
     switch (game.settingsKicker.difficulty) {
         case 'easy':
-            this.kickerReaction = Phaser.Math.Between(700, 1000)
-            break
-        case 'medium':
             this.kickerReaction = Phaser.Math.Between(500, 1000)
             break
+        case 'medium':
+            this.kickerReaction = Phaser.Math.Between(200, 1000)
+            break
         case 'hard':
-                        let randomNum = Math.random()
-            let kickerReactionTimer
-            if(randomNum < 0.3){
-                kickerReactionTimer = Phaser.Math.Between(100, 300)
+            let randomNum = Math.random()
+            this.kickerReaction
+            if(randomNum < 0.5){
+                this.kickerReaction = Phaser.Math.Between(200, 300)
             }
-            else if(0.3 <= randomNum < 0.6){
-                kickerReactionTimer = Phaser.Math.Between(400, 800)
+            else if(0.5 <= randomNum < 0.7){
+                this.kickerReaction = Phaser.Math.Between(400, 800)
             }
             else{
-                kickerReactionTimer = Phaser.Math.Between(900,1000)
+                this.kickerReaction = Phaser.Math.Between(900, 1000)
             }
-            this.kickerReaction = Phaser.Math.Between(200, 1000)
             break
     }
 }
@@ -179,8 +176,8 @@ increaseVelocity(){
 
 //to decrease the velocity of the football throw
 decreaseVelocity(){
-    if(this.qbVelocity >= -500){    //to prevent very slow throw speeds
-        this.qbVelocity = -500
+    if(this.qbVelocity >= -350){    //to prevent very slow throw speeds
+        this.qbVelocity = -350
     }
     else{
         this.qbVelocity += 25
@@ -221,7 +218,7 @@ velocityScene(qbVelocity){
         callbackScope: this
     })
 
-    //to move the kick hitbox
+    //to move the kick hitbox back to the ground
     this.time.addEvent({
         delay: this.kickerReaction - 100,
         callback: () => {

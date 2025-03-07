@@ -109,18 +109,18 @@ class PlayKicker extends Phaser.Scene {
     this.firstQBThrow()
 }
 
-
+//to set up random football velocity. 
 randomFootballVelocity(){
     //generate random values based  on the selected difficulty
     switch (game.settingsQB.difficulty) {
         case 'easy':
-            this.footballVelocity = Phaser.Math.Between(-300, -500)
+            this.footballVelocity = Phaser.Math.Between(-300, -700)
             break
         case 'medium':
-            this.footballVelocity = Phaser.Math.Between(-500, -1500)
+            this.footballVelocity = Phaser.Math.Between(-500, -1700)
             break
         case 'hard':
-            this.footballVelocity = Phaser.Math.Between(-1500, -2500)
+            this.footballVelocity = Phaser.Math.Between(-1700, -2500)
             break
     }   
 }
