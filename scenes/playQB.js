@@ -12,6 +12,9 @@ class PlayQB extends Phaser.Scene {
         this.purpleRect = this.add.rectangle(500, 330, 1000, 100, 0xdf57f6)
         this.yellowRect = this.add.rectangle(500, 0, 1000, 250, 0xf4f976)
 
+        this.escText = this.add.bitmapText(0, 0, 'pixelKey', '[esc] to menu', 20).setTintFill(0x000000)
+        this.escText.setAlpha(0.2)
+
         //to set up the scoring
         this.kickerScore = 0
         this.qbScore = 0
@@ -23,6 +26,12 @@ class PlayQB extends Phaser.Scene {
         this.upKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP)
         this.downKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN)
         this.enterKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER)
+
+        //for the player to menu scene 
+        this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
+
+        //Experiment: To add a pause feature input
+        this.escapeKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC)
 
         //sets up the kicker
         this.kicker = this.physics.add.sprite(200,240, 'kicker')
@@ -278,16 +287,20 @@ update() {
     if(!this.gameOver){ 
 
         //gives the player to increase, decrease, or to throw the football
-        if(Phaser.Input.Keyboard.JustDown(this.upKey)){
+        if(!this.gamePaused && Phaser.Input.Keyboard.JustDown(this.upKey)){
             this.increaseVelocity()
         }
 
-        if(Phaser.Input.Keyboard.JustDown(this.downKey)){
+        if(!this.gamePaused && Phaser.Input.Keyboard.JustDown(this.downKey)){
             this.decreaseVelocity()
         }     
 
-        if(Phaser.Input.Keyboard.JustDown(this.enterKey)){ 
+        if(!this.gamePaused && Phaser.Input.Keyboard.JustDown(this.enterKey)){ 
             this.startGameScene()
+        }
+        //to go to main menu
+        if (Phaser.Input.Keyboard.JustDown(this.escapeKey)) {
+            this.scene.start('menuScene')
         }
 
         //the kicker gets 100 points everytime the football is out of bounds

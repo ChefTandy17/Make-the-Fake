@@ -10,6 +10,9 @@ class PlayTwoPlayer extends Phaser.Scene {
     this.purpleRect = this.add.rectangle(500, 330, 1000, 100, 0xdf57f6)
     this.yellowRect = this.add.rectangle(500, 0, 1000, 250, 0xf4f976)
 
+    this.escText = this.add.bitmapText(0, 0, 'pixelKey', '[esc] to menu', 20).setTintFill(0x000000)
+    this.escText.setAlpha(0.2)
+
     //the scoring system
     this.kickerScore = 0
     this.qbScore = 0
@@ -23,6 +26,9 @@ class PlayTwoPlayer extends Phaser.Scene {
 
     //for the kicker to kick the ball
     this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
+
+    //input to go to main menu
+    this.escapeKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC)
 
     //for the qb to control the ball and to throw the ball
     this.upKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP)
@@ -241,6 +247,11 @@ victoryScreen(checkKickerScore, checkQBScore, player, pixelTextFont){
 update() {
 
     if(!this.gameOver){ 
+
+        //to go to main menu
+        if (Phaser.Input.Keyboard.JustDown(this.escapeKey)) {
+            this.scene.start('menuScene')
+        }
      
         //control for the kicker   
         //ability timer to prevent the kicker to spam the kick animation
