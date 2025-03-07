@@ -14,10 +14,10 @@ class PlayKicker extends Phaser.Scene {
     //as a way to set the pause screen faint and to layer it up
     this.pausedScreen.setAlpha(0)
     this.pausedScreen.setDepth(5)
-    this.pausedText = this.add.bitmapText(centerX, centerY, 'pixelKey', 'WHO CALLED TIMEOUT!?!\n-BMO', 40).setTintFill(0x000000).setOrigin(0.5)
+    this.pausedText = this.add.bitmapText(centerX, centerY - 100, 'pixelKey', 'WHO CALLED TIMEOUT!?!\n-BMO', 40).setTintFill(0x000000).setOrigin(0.5)
     this.pausedText.setAlpha(0)
     this.pausedText.setDepth(5)
-    this.backToMenuText = this.add.bitmapText(centerX, centerY / 2 + 280, 'pixelKey', 'PRESS SPACE TO MENU', 40).setTintFill(0x000000).setOrigin(0.5);
+    this.backToMenuText = this.add.bitmapText(centerX, centerY / 2 + 180, 'pixelKey', 'PRESS ESC TO UNPAUSE\nPRESS SPACE TO MENU', 40).setTintFill(0x000000).setOrigin(0.5);
     this.backToMenuText.setAlpha(0)
     this.backToMenuText.setDepth(5)
 
