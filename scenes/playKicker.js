@@ -105,9 +105,6 @@ class PlayKicker extends Phaser.Scene {
         }
     }, this)
 
-    this.randomFootballVelocity()
-    console.log('Football Velocity:', this.footballVelocity)
-
     //to set up the first throw of the game
     this.firstQBThrow()
 }
@@ -139,7 +136,7 @@ firstQBThrow(){
                 this.sound.play('qbThrow')
                 this.qb.play('throw')
                 this.football.setVelocity(this.footballVelocity, 0)
-                console.log('First Football Velocity:', this.footballVelocity)
+                console.log('Previous Football Velocity:', this.footballVelocity)
                 },
             callbackScope: this,
             loop: false,
@@ -178,7 +175,7 @@ resetFootball(player, pixelTextFont) {
                 this.sound.play('qbThrow')
                 this.qb.play('throw')
                 this.football.setVelocity(this.footballVelocity, 0)
-                console.log('Football Velocity:', this.footballVelocity)
+                console.log('Previous Football Velocity:', this.footballVelocity)
             },
             callbackScope: this
         })

@@ -137,7 +137,7 @@ class PlayQB extends Phaser.Scene {
                 }
             }, this)
 
-        this.randomReaction()
+        //this.randomReaction()
 
 }
 
@@ -151,11 +151,20 @@ randomReaction(){
             this.kickerReaction = Phaser.Math.Between(500, 1000)
             break
         case 'hard':
+                        let randomNum = Math.random()
+            let kickerReactionTimer
+            if(randomNum < 0.3){
+                kickerReactionTimer = Phaser.Math.Between(100, 300)
+            }
+            else if(0.3 <= randomNum < 0.6){
+                kickerReactionTimer = Phaser.Math.Between(400, 800)
+            }
+            else{
+                kickerReactionTimer = Phaser.Math.Between(900,1000)
+            }
             this.kickerReaction = Phaser.Math.Between(200, 1000)
             break
     }
-
-    console.log('Reaction Time:', this.kickerReaction)
 }
 
 //to increase the velocity of the football throw
@@ -197,7 +206,7 @@ velocityScene(qbVelocity){
     this.qb.play('throw')
 
     this.football.setVelocity(qbVelocity, 0)
-    
+
     this.randomReaction()
 
     //to set the kicker position to kick
@@ -207,13 +216,14 @@ velocityScene(qbVelocity){
             this.kicker.play('kick')
             this.kicker.setSize(5, 5)
             this.kicker.setOffset(25, 14)
+            console.log('Previous Reaction Time:', this.kickerReaction)
             },
         callbackScope: this
     })
 
     //to move the kick hitbox
     this.time.addEvent({
-        delay: 600,
+        delay: this.kickerReaction - 100,
         callback: () => {
             this.kicker.play('kick')
             this.kicker.body.setSize(5, 5)
@@ -308,15 +318,17 @@ update() {
     if(!this.gameOver){ 
 
         //gives the player to increase, decrease, or to throw the football
-        if(!this.gamePaused && Phaser.Input.Keyboard.JustDown(this.upKey)){
+        if(Phaser.Input.Keyboard.JustDown(this.upKey)){
             this.increaseVelocity()
+            console.log('Current Velocity:', this.qbVelocity)
         }
 
-        if(!this.gamePaused && Phaser.Input.Keyboard.JustDown(this.downKey)){
+        if(Phaser.Input.Keyboard.JustDown(this.downKey)){
             this.decreaseVelocity()
+            console.log('Current Velocity:', this.qbVelocity)
         }     
 
-        if(!this.gamePaused && Phaser.Input.Keyboard.JustDown(this.enterKey)){ 
+        if(Phaser.Input.Keyboard.JustDown(this.enterKey)){ 
             this.startGameScene()
         }
         //to go to main menu

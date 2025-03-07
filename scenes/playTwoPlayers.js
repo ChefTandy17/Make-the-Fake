@@ -309,10 +309,12 @@ update() {
         //for players to be able to adjust the velocity of the football
         if(Phaser.Input.Keyboard.JustDown(this.upKey)){
             this.increaseVelocity()
+            console.log('Current Velocity:', this.qbVelocity)
         }
 
         if(Phaser.Input.Keyboard.JustDown(this.downKey)){
             this.decreaseVelocity()
+            console.log('Current Velocity:', this.qbVelocity)
         }   
 
         //gives the player the ability to throw the football when the cooldown is over
