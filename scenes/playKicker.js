@@ -9,6 +9,18 @@ class PlayKicker extends Phaser.Scene {
     this.purpleRect = this.add.rectangle(500, 330, 1000, 100, 0xdf57f6)
     this.yellowRect = this.add.rectangle(500, 0, 1000, 250, 0xf4f976)
 
+    //Experiment: To add a pause screen
+    this.pausedScreen = this.add.rectangle(0, 0 , 5500, 5500, 0xbebebe)
+    //as a way to set the pause screen faint and to layer it up
+    this.pausedScreen.setAlpha(0)
+    this.pausedScreen.setDepth(5)
+    this.pausedText = this.add.bitmapText(centerX, centerY, 'pixelKey', 'WHO CALLED TIMEOUT!?!\n-BMO', 40).setTintFill(0x000000).setOrigin(0.5)
+    this.pausedText.setAlpha(0)
+    this.pausedText.setDepth(5)
+    this.backToMenuText = this.add.bitmapText(centerX, centerY / 2 + 280, 'pixelKey', 'PRESS SPACE TO MENU', 40).setTintFill(0x000000).setOrigin(0.5);
+    this.backToMenuText.setAlpha(0)
+    this.backToMenuText.setDepth(5)
+
     //to create a scoring system
     this.kickerScore = 0
     this.qbScore = 0
@@ -19,6 +31,10 @@ class PlayKicker extends Phaser.Scene {
 
     //spacebar input, which gives the player the ability to kick a ball
     this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
+
+    //Experiment: To add a pause feature input
+    this.escapeKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC)
+    this.gamePaused = false
 
     //displaying the kicker
     this.kicker = this.physics.add.sprite(200,240, 'kicker')
@@ -106,7 +122,7 @@ class PlayKicker extends Phaser.Scene {
 //for the quarterback to throw the first football to the kicker. This is called once to set up the game
 firstQBThrow(){
         this.time.addEvent({
-            delay: Phaser.Math.Between(1000, 5000),
+            delay: Phaser.Math.Between(3000, 5000),
             callback: () => {
                 this.sound.play('qbThrow')
                 this.qb.play('throw')
@@ -189,9 +205,58 @@ victoryScreen(checkKickerScore, checkQBScore, player, pixelTextFont){
 
 }
 
+//to pause the game
+/*
+pausedScene(){
+    this.gamePaused = true
+    this.pausedScreen.setAlpha(0.5)
+    this.football.body.moves = false
+    this.gameOver = true
+
+    //experiment: to return out of pause
+    if(this.gameOver == true && this.gamePaused == true){
+        if (Phaser.Input.Keyboard.JustDown(this.escapeKey)) {
+                this.gamePaused = false
+                this.pausedScreen.setAlpha(0)
+                this.football.body.moves = true
+                this.gameOver = false
+            }
+        }
+        if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
+            this.scene.start('menuScene')
+        }
+}
+*/
+
 update() {
 
+    if(this.gamePaused){
+        if(this.gameOver == true && this.gamePaused == true){
+            if (Phaser.Input.Keyboard.JustDown(this.escapeKey)) {
+                    this.gamePaused = false
+                    this.pausedScreen.setAlpha(0)
+                    this.pausedText.setAlpha(0)
+                    this.backToMenuText.setAlpha(0)
+                    this.football.body.moves = true
+                    this.gameOver = false
+                }
+            }
+            if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
+                this.scene.start('menuScene')
+            }
+    }
+
     if(!this.gameOver){
+
+        //experiment: to create a pause menu
+        if (Phaser.Input.Keyboard.JustDown(this.escapeKey)) {
+            this.gamePaused = true
+            this.pausedScreen.setAlpha(0.7)
+            this.pausedText.setAlpha(1)
+            this.backToMenuText.setAlpha(1)
+            this.football.body.moves = false
+            this.gameOver = true
+        }
 
         //sets up a timer for the kicker to prevent players to spam the kick button
         if (this.kickerAbilityTimer == undefined) {
