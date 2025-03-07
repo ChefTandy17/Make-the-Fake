@@ -235,7 +235,7 @@ update() {
             }
         }
 
-        //collision check to move the football up to indicate a successful kick, along with displaying a particle and play the kick sound
+        //collision check to move the football up to indicate a successful kick, along with displaying a particle, and play the kick sound
         this.physics.add.collider(this.kicker, this.football, (kicker, football) => {
             if(!this.kickSoundFlag){
                 this.sound.play('kickSound')

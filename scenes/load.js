@@ -69,7 +69,7 @@ class Load extends Phaser.Scene {
 
         //go to the main menu scene
         this.time.addEvent({
-            delay: 4400,
+            delay: 4500,
             callback: () => {
                 this.scene.start('menuScene')
             },
