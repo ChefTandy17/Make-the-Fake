@@ -154,7 +154,7 @@ randomReaction(){
             if(randomNum < 0.5){
                 this.kickerReaction = Phaser.Math.Between(200, 300)
             }
-            else if(0.5 <= randomNum < 0.7){
+            else if(randomNum >= 0.5 && randomNum < 0.8){
                 this.kickerReaction = Phaser.Math.Between(400, 800)
             }
             else{
