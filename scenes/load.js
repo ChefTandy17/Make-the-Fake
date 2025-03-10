@@ -37,7 +37,6 @@ class Load extends Phaser.Scene {
 
         //used Nathan Altice Paddle Parkcour with modifcations to help create the loading screen
         this.blackScreen = this.add.rectangle(centerX, centerY, 1000, 500, 0x000000).setOrigin(0.5)
-        
         let loadingBar = this.add.graphics()            
         this.load.on('progress', (value) => {  
             loadingBar.clear()                                 
@@ -51,12 +50,12 @@ class Load extends Phaser.Scene {
     }
     create() {
 
+        // Create BMO's face and eyes from Adventure Time
         this.bmoColor = this.add.rectangle(centerX, centerY, 1000, 500, 0xD9FDDC).setOrigin(0.5)
-
-        // Create BMO's face from Adventure Time
         this.leftEye = this.add.ellipse(centerX - 200, centerY - 50, 30, 50, 0x000000)
         this.rightEye = this.add.ellipse(centerX + 200, centerY - 50, 30, 50, 0x000000)
 
+        // Create BMO's smile as an arc
         let smile = this.add.graphics()
         smile.lineStyle(6, 0x000000, 1)
         smile.beginPath()
@@ -67,7 +66,7 @@ class Load extends Phaser.Scene {
             volume: 3,
         })
 
-        //go to the main menu scene
+        //go to the main menu scene after 4.5 seconds
         this.time.addEvent({
             delay: 4500,
             callback: () => {

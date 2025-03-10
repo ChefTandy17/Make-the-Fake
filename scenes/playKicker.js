@@ -9,6 +9,7 @@ class PlayKicker extends Phaser.Scene {
     this.purpleRect = this.add.rectangle(500, 330, 1000, 100, 0xdf57f6)
     this.yellowRect = this.add.rectangle(500, 0, 1000, 250, 0xf4f976)
 
+    //to provide information for the user that they can press esc key to go to menu
     this.escText = this.add.bitmapText(0, 0, 'pixelKey', '[esc] to menu', 20).setTintFill(0x000000)
     this.escText.setAlpha(0.2)
 
@@ -20,13 +21,11 @@ class PlayKicker extends Phaser.Scene {
     this.kickerScoreText = this.add.bitmapText(50, 450, 'pixelKey', 'P1:000', 40).setTintFill(0xffffff)
     this.qbScoreText = this.add.bitmapText(550, 450, 'pixelKey', 'P2:000', 40).setTintFill(0xffffff)
 
-    //spacebar input, which gives the player the ability to kick a ball
+    //user inputs, which is only spacebar key and esc key.
     this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
-
-    //Experiment: To add a pause feature input
     this.escapeKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC)
 
-    //displaying the kicker
+    //displaying the kicker, adjusting its size, layering, and hitbox
     this.kicker = this.physics.add.sprite(200,240, 'kicker')
     this.kicker.setScale(6)
     this.kicker.setDepth(1)
@@ -35,7 +34,7 @@ class PlayKicker extends Phaser.Scene {
     this.kicker.body.setCollideWorldBounds(true)
     this.kicker.body.setImmovable(true) 
 
-    //displaying the quarterback
+    //displaying the quarterback, adjusting its size, layering, and hitbox
     this.qb = this.physics.add.sprite(800,240, 'qb')
     this.qb.setScale(6)
     this.qb.body.setSize(5, 5)
@@ -48,7 +47,7 @@ class PlayKicker extends Phaser.Scene {
     this.football = this.physics.add.sprite(770,150,'football')
     this.football.setScale(6)
 
-    //game over flag to end the game
+    //game over flag to check if the gameplay is still going
     this.gameOver = false
     
     //create an idle animations for the kicker
@@ -105,13 +104,13 @@ class PlayKicker extends Phaser.Scene {
         }
     }, this)
 
-    //to set up the first throw of the game
+    //to set up the first football throw
     this.firstQBThrow()
 }
 
-//to set up random football velocity. 
+//This is selectable in the difficultyQB.js scene for what difficulty gamemode they selected
 randomFootballVelocity(){
-    //generate random values based  on the selected difficulty
+    //generate random velocity variable based on the selected difficulty
     switch (game.settingsQB.difficulty) {
         case 'easy':
             this.footballVelocity = Phaser.Math.Between(-300, -700)
@@ -162,7 +161,7 @@ resetFootball(player, pixelTextFont) {
         this.qbScoreText.setText("P2:" + this.qbScore)
     }
 
-    //this function is called to check if the victory condition is met
+    //this function, victoryScreen, is called to check if the victory condition is met
     //if its true, it sets the gameOver flag to true.
     this.victoryScreen(this.kickerScore, this.qbScore, player, pixelTextFont)
 
@@ -201,10 +200,10 @@ victoryScreen(checkKickerScore, checkQBScore, player, pixelTextFont){
         qbVictoryYellow.setDepth(1)
         console.log("in qb")
         this.sound.play('victorySound1')
-        this.gameOver = true
+        this.gameOver = true                        
     }
 
-    //send the player back to the main menu screen after seven seconds.
+    //send the player back to the main menu screen after seven seconds, since the game is over.
     if(this.gameOver){
         this.time.addEvent({
             delay: 7000,
@@ -244,7 +243,7 @@ update() {
                 this.kicker.setSize(5, 5)
                 this.kicker.setOffset(25, 14)
 
-                //to remove the collision hitbox at a certain point in time
+                //to move the collision hitbox at a certain point in time. 
                 this.time.addEvent({
                     delay: 500,
                     callback: () => {
@@ -255,7 +254,7 @@ update() {
                     callbackScope: this
                 })
                 
-                //to set the kicker position back to idle after kicking the ball
+                //to set the kicker position back to idle
                 this.time.addEvent({
                     delay: 1500,
                     callback: () => {

@@ -34,7 +34,7 @@ class DifficultyQB extends Phaser.Scene {
         if (Phaser.Input.Keyboard.JustDown(this.oneKey)) {
             game.settingsQB = {
                 difficulty: 'easy',
-                footballKickedVelocity: -500,    
+                footballKickedVelocity: -500,               //this is applied when the kicker successfully kicked the football up.
             }
             this.sound.play('kickerScoreSound')
             this.scene.start('playKickerScene')

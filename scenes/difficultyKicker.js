@@ -34,7 +34,7 @@ class DifficultyKicker extends Phaser.Scene {
         if (Phaser.Input.Keyboard.JustDown(this.oneKey)) {
             game.settingsKicker = {
                 difficulty: 'easy',
-                kickerIdlePos: 1000
+                kickerIdlePos: 1000                     //bring the kicker back to its idle position after one second,
             }
             this.sound.play('kickerScoreSound')
             this.scene.start('playQBScene')

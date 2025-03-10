@@ -28,6 +28,7 @@ class Menu extends Phaser.Scene {
 
     create() {
 
+        //to create animation key of the football
         this.anims.create({
             key: 'spin',
             frames: this.anims.generateFrameNumbers('footballSpritesheet', { 
