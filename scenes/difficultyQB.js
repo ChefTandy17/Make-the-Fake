@@ -62,6 +62,7 @@ class DifficultyQB extends Phaser.Scene {
 
         //back to previous scene
         if (Phaser.Input.Keyboard.JustDown(this.spacebarKey)) {
+            this.sound.play('qbScoreSound')
             this.scene.start('selectPosScene')
         }
     }

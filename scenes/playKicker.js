@@ -222,6 +222,7 @@ update() {
 
         //to go to main menu scene
         if (Phaser.Input.Keyboard.JustDown(this.escapeKey)) {
+            this.sound.play('qbScoreSound')
             this.scene.start('menuScene')
         }
 

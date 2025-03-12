@@ -53,6 +53,7 @@ class NumPlayers extends Phaser.Scene {
         }
         //to go back to the menu scene
         if (Phaser.Input.Keyboard.JustDown(this.spacebarKey)) {
+            this.sound.play('qbScoreSound')
             this.scene.start('menuScene')
         }
     }

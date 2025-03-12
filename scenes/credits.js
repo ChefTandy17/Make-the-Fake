@@ -22,7 +22,7 @@ class Credits extends Phaser.Scene {
         this.creditsText = this.add.bitmapText(centerX, centerY / 2 + 120, 'pixelKey', 'Additional audios were created using jsfxr', 15).setTintFill(0xe31837).setOrigin(0.5)
         this.creditsText = this.add.bitmapText(centerX, centerY / 2 + 150, 'pixelKey', 'Sprites were designed using Piskel', 15).setTintFill(0xe31837).setOrigin(0.5)
 
-        this.spaceBarText = this.add.bitmapText(centerX, centerY / 2 + 340, 'pixelKey', 'PRESS SPACE TO GO BACK TO MENU', 30).setTintFill(0xfdbb30).setOrigin(0.5)
+        this.spaceBarText = this.add.bitmapText(centerX, centerY / 2 + 340, 'pixelKey', 'PRESS [SPACE] TO GO BACK TO MENU', 30).setTintFill(0xfdbb30).setOrigin(0.5)
 
     }
 
@@ -32,6 +32,7 @@ class Credits extends Phaser.Scene {
 
     update() {
         if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
+            this.sound.play('qbScoreSound')
             this.scene.start('menuScene');
         }
     }

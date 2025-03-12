@@ -28,6 +28,7 @@ class Tutorial extends Phaser.Scene {
 
     update() {
         if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
+            this.sound.play('qbScoreSound')
             this.scene.start('menuScene');
         }
     }

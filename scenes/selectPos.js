@@ -46,6 +46,7 @@ class SelectPos extends Phaser.Scene {
         }
         //go back to select the number of players
         if (Phaser.Input.Keyboard.JustDown(this.spacebarKey)) {
+            this.sound.play('qbScoreSound')
             this.scene.start('numPlayersScene')
         }
 
