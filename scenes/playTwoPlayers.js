@@ -335,6 +335,7 @@ update() {
             this.resetFootball("kicker", 'pixelKey')
             this.qb.play('qbIdle')                  //reset quarterback position to idle
             this.gameSceneFlag = false
+            this.qbVelocity = -500
         }
 
         //the qb gets 100 points everytime the football is out of bounds
@@ -342,6 +343,7 @@ update() {
             this.resetFootball("qb",'pixelKey')
             this.qb.play('qbIdle')                  //reset quarterback position to idle
             this.gameSceneFlag = false
+            this.qbVelocity = -500
         }
     }
 }

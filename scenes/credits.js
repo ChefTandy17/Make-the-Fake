@@ -7,7 +7,7 @@ class Credits extends Phaser.Scene {
 //Press Start P2 font designed by CodeMan38
 //kick greg by djszigen
 //Bit Shift by Kevin MacLeod
-//BMO voiceline from Adventure Time - Rainly Day Daydream
+//BMO voiceline from Adventure Time - Rainy Day Daydream
 
     preload() {
 
