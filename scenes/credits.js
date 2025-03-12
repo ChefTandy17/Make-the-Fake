@@ -18,7 +18,7 @@ class Credits extends Phaser.Scene {
         this.creditsText = this.add.bitmapText(centerX, centerY / 2, 'pixelKey', 'Press Start P2 font designed by CodeMan38', 15).setTintFill(0x002b5c).setOrigin(0.5)
         this.creditsText = this.add.bitmapText(centerX, centerY / 2 + 30, 'pixelKey', 'Bit Shift by Kevin MacLeod', 15).setTintFill(0x002b5c).setOrigin(0.5)
         this.creditsText = this.add.bitmapText(centerX, centerY / 2 + 60, 'pixelKey', 'kick greg by djszigen', 15).setTintFill(0xe31837).setOrigin(0.5)
-        this.creditsText = this.add.bitmapText(centerX, centerY / 2 + 90, 'pixelKey', 'BMO voiceline from Adventure Time episode Rainly Day Daydream', 15).setTintFill(0xe31837).setOrigin(0.5)
+        this.creditsText = this.add.bitmapText(centerX, centerY / 2 + 90, 'pixelKey', 'BMO voiceline from Adventure Time episode Rainy Day Daydream', 15).setTintFill(0xe31837).setOrigin(0.5)
         this.creditsText = this.add.bitmapText(centerX, centerY / 2 + 120, 'pixelKey', 'Additional audios were created using jsfxr', 15).setTintFill(0xe31837).setOrigin(0.5)
         this.creditsText = this.add.bitmapText(centerX, centerY / 2 + 150, 'pixelKey', 'Sprites were designed using Piskel', 15).setTintFill(0xe31837).setOrigin(0.5)
 
