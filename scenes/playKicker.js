@@ -10,7 +10,7 @@ class PlayKicker extends Phaser.Scene {
     this.yellowRect = this.add.rectangle(500, 0, 1000, 250, 0xf4f976)
 
     //to provide information for the user that they can press esc key to go to menu
-    this.escText = this.add.bitmapText(0, 0, 'pixelKey', '[esc] to menu', 20).setTintFill(0x000000)
+    this.escText = this.add.bitmapText(0, 5, 'pixelKey', '[esc] to menu', 20).setTintFill(0x000000)
     this.escText.setAlpha(0.2)
 
     //to create a scoring system

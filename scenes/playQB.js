@@ -12,7 +12,7 @@ class PlayQB extends Phaser.Scene {
         this.purpleRect = this.add.rectangle(500, 330, 1000, 100, 0xdf57f6)
         this.yellowRect = this.add.rectangle(500, 0, 1000, 250, 0xf4f976)
 
-        this.escText = this.add.bitmapText(0, 0, 'pixelKey', '[esc] to menu', 20).setTintFill(0x000000)
+        this.escText = this.add.bitmapText(0, 5, 'pixelKey', '[esc] to menu', 20).setTintFill(0x000000)
         this.escText.setAlpha(0.2)
 
         //to set up the scoring

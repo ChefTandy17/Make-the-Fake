@@ -10,7 +10,7 @@ class PlayTwoPlayer extends Phaser.Scene {
     this.purpleRect = this.add.rectangle(500, 330, 1000, 100, 0xdf57f6)
     this.yellowRect = this.add.rectangle(500, 0, 1000, 250, 0xf4f976)
 
-    this.escText = this.add.bitmapText(0, 0, 'pixelKey', '[esc] to menu', 20).setTintFill(0x000000)
+    this.escText = this.add.bitmapText(0, 5, 'pixelKey', '[esc] to menu', 20).setTintFill(0x000000)
     this.escText.setAlpha(0.2)
 
     //the scoring system
@@ -20,6 +20,10 @@ class PlayTwoPlayer extends Phaser.Scene {
     //the set variables for the velocity for the qb.
     this.qbVelocity = -500
     this.gameSceneFlag = false  
+
+    //to display current qb velocity
+    this.qbVelocityText = this.add.bitmapText(675, 5, 'pixelKey', 'P2 Velocity:500', 20).setTintFill(0x000000)
+    this.qbVelocityText.setAlpha(0.2)
 
     this.kickerScoreText = this.add.bitmapText(50, 450, 'pixelKey', 'P1:000', 40).setTintFill(0xffffff)
     this.qbScoreText = this.add.bitmapText(550, 450, 'pixelKey', 'P2:000', 40).setTintFill(0xffffff)
@@ -144,9 +148,11 @@ class PlayTwoPlayer extends Phaser.Scene {
 increaseVelocity(){
     if(this.qbVelocity <= -2500){    //to prevent very fast throw speeds
         this.qbVelocity = -2500
+        this.qbVelocityText.setText("P2 Velocity:" + -(this.qbVelocity))
     }
     else{
         this.qbVelocity -= 50
+        this.qbVelocityText.setText("P2 Velocity:" + -(this.qbVelocity))
     }
 }
 
@@ -154,9 +160,11 @@ increaseVelocity(){
 decreaseVelocity(){
     if(this.qbVelocity >= -300){    //to prevent very slow throws
         this.qbVelocity = -300
+        this.qbVelocityText.setText("P2 Velocity:" + -(this.qbVelocity))
     }
     else{
         this.qbVelocity += 25
+        this.qbVelocityText.setText("P2 Velocity:" + -(this.qbVelocity))
     }
 }
 
@@ -336,6 +344,7 @@ update() {
             this.qb.play('qbIdle')                  //reset quarterback position to idle
             this.gameSceneFlag = false
             this.qbVelocity = -500
+            this.qbVelocityText.setText("P2 Velocity:" + -(this.qbVelocity))
         }
 
         //the qb gets 100 points everytime the football is out of bounds
@@ -344,6 +353,7 @@ update() {
             this.qb.play('qbIdle')                  //reset quarterback position to idle
             this.gameSceneFlag = false
             this.qbVelocity = -500
+            this.qbVelocityText.setText("P2 Velocity:" + -(this.qbVelocity))
         }
     }
 }
