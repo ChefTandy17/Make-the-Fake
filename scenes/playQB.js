@@ -314,7 +314,7 @@ victoryScreen(checkKickerScore, checkQBScore, player, pixelTextFont){
     //send the player back to the main menu scene
     if(this.gameOver){
         this.time.addEvent({
-            delay: 7000,
+            delay: 4500,
             callback: () => {
                 this.scene.start('menuScene');
             },
