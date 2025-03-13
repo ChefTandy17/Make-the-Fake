@@ -19,6 +19,10 @@ class PlayQB extends Phaser.Scene {
         this.kickerScore = 0
         this.qbScore = 0
 
+        //to display current qb velocity
+        this.qbVelocityText = this.add.bitmapText(675, 5, 'pixelKey', 'P2 Velocity:500', 20).setTintFill(0x000000)
+        this.qbVelocityText.setAlpha(0.2)
+
         this.kickerScoreText = this.add.bitmapText(50, 450, 'pixelKey', 'P1:000', 40).setTintFill(0xffffff)
         this.qbScoreText = this.add.bitmapText(550, 450, 'pixelKey', 'P2:000', 40).setTintFill(0xffffff)
 
@@ -168,9 +172,16 @@ randomReaction(){
 increaseVelocity(){
     if(this.qbVelocity <= -2500){    //to prevent very fast throw speeds
         this.qbVelocity = -2500
+        this.qbVelocityText.setText("P2 Velocity:" + -(this.qbVelocity))
+        
     }
     else{
         this.qbVelocity -= 50
+        if(this.qbVelocity <= -2500){    //to prevent very fast throw speeds
+            this.qbVelocity = -2500
+            this.qbVelocityText.setText("P2 Velocity:" + -(this.qbVelocity))
+        }
+        this.qbVelocityText.setText("P2 Velocity:" + -(this.qbVelocity))
     }
 }
 
@@ -178,9 +189,11 @@ increaseVelocity(){
 decreaseVelocity(){
     if(this.qbVelocity >= -350){    //to prevent very slow throw speeds
         this.qbVelocity = -350
+        this.qbVelocityText.setText("P2 Velocity:" + -(this.qbVelocity))
     }
     else{
         this.qbVelocity += 25
+        this.qbVelocityText.setText("P2 Velocity:" + -(this.qbVelocity))
     }
 }
 
@@ -252,6 +265,7 @@ resetFootball(player, pixelTextFont) {
     this.football.setPosition(770, 150)
     this.football.setVelocity(0, 0)
     this.qbVelocity = -500
+    this.qbVelocityText.setText("P2 Velocity:" + -(this.qbVelocity))
 
     //determines who to give the score to
     if (player == 'kicker') {

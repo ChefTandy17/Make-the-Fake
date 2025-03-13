@@ -152,6 +152,10 @@ increaseVelocity(){
     }
     else{
         this.qbVelocity -= 50
+        if(this.qbVelocity <= -2500){    //to prevent very fast throw speeds
+            this.qbVelocity = -2500
+            this.qbVelocityText.setText("P2 Velocity:" + -(this.qbVelocity))
+        }
         this.qbVelocityText.setText("P2 Velocity:" + -(this.qbVelocity))
     }
 }
